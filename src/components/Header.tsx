@@ -1,3 +1,6 @@
+import { LoginOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+
 const Header = () => {
 
 
@@ -6,6 +9,7 @@ const Header = () => {
             <a className="mx-auto text-white h-10 text-2xl align-baseline" href="/">
                 The Retreat
             </a>
+            <Button type="primary" className="bg-blue-500"><LoginOutlined /></Button>
         </div>
     );
 }
