@@ -11,7 +11,7 @@ import { useState } from "react";
 
 const { RangePicker } = DatePicker;
 
-const Home = () => {
+const HomePage = () => {
   const [open, setOpen] = useState(false);
 
   const hide = () => {
@@ -77,7 +77,7 @@ const Home = () => {
                     </Checkbox>
                 </div>
                 <div className="border-t-2 pt-3 justify-between flex">
-                    <Button>
+                    <Button disabled>
                         Zurücksetzen
                     </Button>
                     <Button type="primary" className="bg-blue-500">
@@ -92,7 +92,7 @@ const Home = () => {
               onOpenChange={handleOpenChange}
             >
               <Button type="primary" className="bg-blue-500 mr-3 text-xs">
-              1 Zimmer 2 Gäste
+                1 Zimmer 2 Gäste
               </Button>
             </Popover>
             <Button type="primary" className="bg-blue-500">
@@ -108,10 +108,9 @@ const Home = () => {
         <RestaurantOverview />
         <SpaOverview />
       </Container>
-
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

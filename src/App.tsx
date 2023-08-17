@@ -3,7 +3,7 @@ import { logout, login, setup, create } from "frontend-library";
 import logo from './logo.svg';
 import {CookieConsent} from "react-cookie-consent";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Home from './pages/Home';
+import HomePage from './pages/HomePage';
 import Header from './components/Header';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <Header />
         <div>
           <Routes>
-              <Route path="/" element={<Home/>}/>
+              <Route path="/" element={<HomePage/>}/>
 
           </Routes>
         </div>
