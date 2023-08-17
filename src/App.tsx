@@ -1,16 +1,20 @@
 import React from 'react';
 import { logout, login, setup, create } from "frontend-library";
 import logo from './logo.svg';
-import './App.css';
 import {CookieConsent} from "react-cookie-consent";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Home from './pages/Home';
+import Header from './components/Header';
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <Router>
+        
+      <Header />
         <div>
           <Routes>
+              <Route path="/" element={<Home/>}/>
 
           </Routes>
         </div>
