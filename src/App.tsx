@@ -5,6 +5,7 @@ import {CookieConsent} from "react-cookie-consent";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
+import SearchPage from './pages/SearchPage';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <div>
           <Routes>
               <Route path="/" element={<HomePage/>}/>
-
+              <Route path="/search" element={<SearchPage/>}/>
           </Routes>
         </div>
       </Router>

@@ -95,7 +95,7 @@ const HomePage = () => {
                 1 Zimmer 2 Gäste
               </Button>
             </Popover>
-            <Button type="primary" className="bg-blue-500">
+            <Button type="primary" className="bg-blue-500" href="/search">
               Suche
             </Button>
           </div>
