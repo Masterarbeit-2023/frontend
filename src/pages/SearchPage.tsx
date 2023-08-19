@@ -11,33 +11,25 @@ import { useState } from "react";
 import FilterContainer from "../components/search/FilterContainer";
 import BudgetFilter from "../components/search/BudgetFilter";
 import RatingFilter from "../components/search/RatingFilter";
+import MoreFilter from "../components/search/MoreFilter";
 
 const { RangePicker } = DatePicker;
 
+interface Filter {
+  name: string;
+  value: boolean;
+}
+
 const SearchPage = () => {
   const [open, setOpen] = useState(false);
-  const [budgetOpen, setBudgetOpen] = useState(false);
-  const [ratingOpen, setRatingOpen] = useState(false);
-  const [moreFilterOpen, setMoreFilterOpen] = useState(false);
 
   const [budgetRange, setBudgetRange] = useState([0, 500]);
   const [perNight, setPerNight] = useState(false);
   const [rating, setRating] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
-  };
-
-  const handleBudgetOpenChange = (newOpen: boolean) => {
-    setBudgetOpen(newOpen);
-  };
-
-  const handleRatingOpenChange = (newOpen: boolean) => {
-    setRatingOpen(newOpen);
-  };
-
-  const handleMoreFilterOpenChange = (newOpen: boolean) => {
-    setMoreFilterOpen(newOpen);
   };
 
   const onSaveBudget = (newPerNight: boolean, newBudgetRange: number[]) => {
@@ -48,7 +40,12 @@ const SearchPage = () => {
   const onSaveRating = (newRating: number) => {
     setRating(newRating);
   }
-  
+
+  const onSaveFilters = (newFilters: string[]) => {
+    console.log("Save: " + newFilters);
+    console.log(selectedFilter);
+    setSelectedFilter(newFilters);
+  }
 
   return (
     <div className="pt-10">
@@ -120,20 +117,7 @@ const SearchPage = () => {
           <div className="flex justify-between">
             <BudgetFilter onSave={onSaveBudget} budgetRange={budgetRange} perNight={perNight}/>
             <RatingFilter onSave={onSaveRating} currentRating={rating}/>
-            <FilterContainer title="Mehr Filter">
-              <Popover
-                placement="bottom"
-                content={<div></div>}
-                title=""
-                trigger="hover"
-                open={moreFilterOpen}
-                onOpenChange={handleMoreFilterOpenChange}
-              >
-                <Button type="primary" className="bg-blue-500 text-xs">
-                  Mehr Filter
-                </Button>
-              </Popover>
-            </FilterContainer>
+            <MoreFilter onSave={onSaveFilters} selectedFilter={selectedFilter}/>
           </div>
         </Container>
       </div>
