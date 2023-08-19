@@ -2,22 +2,15 @@ import {
   Button,
   Checkbox,
   DatePicker,
-  Divider,
-  Dropdown,
   Input,
-  MenuProps,
   Popover,
-  Slider,
-  Space,
-  Typography,
 } from "antd";
 import Container from "../components/Container";
-import { DownOutlined, SearchOutlined } from "@ant-design/icons";
+import {  SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import FilterContainer from "../components/search/FilterContainer";
-import Filter from "../components/search/Filter";
-import { SliderMarks } from "antd/es/slider";
 import BudgetFilter from "../components/search/BudgetFilter";
+import RatingFilter from "../components/search/RatingFilter";
 
 const { RangePicker } = DatePicker;
 
@@ -29,6 +22,7 @@ const SearchPage = () => {
 
   const [budgetRange, setBudgetRange] = useState([0, 500]);
   const [perNight, setPerNight] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -49,6 +43,10 @@ const SearchPage = () => {
   const onSaveBudget = (newPerNight: boolean, newBudgetRange: number[]) => {
     setPerNight(newPerNight);
     setBudgetRange(newBudgetRange);
+  }
+
+  const onSaveRating = (newRating: number) => {
+    setRating(newRating);
   }
   
 
@@ -121,20 +119,7 @@ const SearchPage = () => {
           </div>
           <div className="flex justify-between">
             <BudgetFilter onSave={onSaveBudget} budgetRange={budgetRange} perNight={perNight}/>
-            <FilterContainer title="Bewertung">
-              <Popover
-                placement="bottom"
-                content={<div></div>}
-                title=""
-                trigger="hover"
-                open={ratingOpen}
-                onOpenChange={handleRatingOpenChange}
-              >
-                <Button type="primary" className="bg-blue-500 text-xs">
-                  Bewertung
-                </Button>
-              </Popover>
-            </FilterContainer>
+            <RatingFilter onSave={onSaveRating} currentRating={rating}/>
             <FilterContainer title="Mehr Filter">
               <Popover
                 placement="bottom"
