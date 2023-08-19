@@ -29,7 +29,6 @@ const MoreFilter = (props: MoreFilterProps) => {
   const [selectedFilters, setSelectedFilters] = useState(props.selectedFilter);
 
   const onSave = () => {
-    console.log("SELECt" + selectedFilters)
     props.onSave(selectedFilters);
   };
   const save = (newFilters: string[]) => {
@@ -42,13 +41,10 @@ const MoreFilter = (props: MoreFilterProps) => {
 
   const onChange = (name: string, value: boolean) => {
     const tmpFilters = selectedFilters;
-    console.log("Name: " + name + ", Value: " + value);
     if (!value && tmpFilters.filter((e) => e === name).length > 0) {
-      console.log("Delete");
       setSelectedFilters(selectedFilters.filter((s) => s !== name));
       props.removeItem(name);
     } else if (value && tmpFilters.filter((e) => e === name).length == 0) {
-      console.log("Add");
       setSelectedFilters([...selectedFilters, name]);
       props.addItem(name);
     }

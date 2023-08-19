@@ -53,7 +53,6 @@ const SearchPage = () => {
     setSelectedFilter(selectedFilter.filter((s) => s !== item));
   };
 
-  console.log(selectedFilter);
 
   return (
     <div className="pt-10">
