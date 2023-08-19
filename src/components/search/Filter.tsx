@@ -9,6 +9,7 @@ interface FilterProps {
   onSave: any;
   onOpen: any;
   resetDisabled: boolean;
+  onReset?: any;
 }
 const Filter = (props: FilterProps) => {
   const [open, setOpen] = useState(false);
@@ -33,6 +34,11 @@ const Filter = (props: FilterProps) => {
     setOpen(false);
   }
 
+  const onReset = () => {
+    props.onReset();
+    close();
+  }
+
   const onSave = () => {
     props.onSave();
     close();
@@ -46,7 +52,7 @@ const Filter = (props: FilterProps) => {
           <div className="">
             {props.children}
             <div className="border-t-2 pt-3 mt-3 justify-between flex w-full">
-              <Button disabled={props.resetDisabled} onClick={props.onOpen}>Zurücksetzen</Button>
+              <Button disabled={props.resetDisabled} onClick={onReset}>Zurücksetzen</Button>
               <Button type="primary" className="bg-blue-500" onClick={onSave}>
                 Anwenden
               </Button>

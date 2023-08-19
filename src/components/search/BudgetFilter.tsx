@@ -29,6 +29,12 @@ const BudgetFilter = (props: BudgetFilterProps) => {
     });
   };
 
+  const onReset = () => {
+    setBudgetRange([0, 500]);
+    setPerNight(false);
+    props.onSave(false, [0,500]);
+  }
+
   const onChangeBudgetSlider = (value: [number, number]) => {
     setBudgetRange([value[0], value[1]]);
     setMarks({
@@ -46,7 +52,7 @@ const BudgetFilter = (props: BudgetFilterProps) => {
   }
   const buttonText = `${props.budgetRange[0]}€ - ${props.budgetRange[1]}€`;
 
-  const selected = " bg-green-500 text-white"
+  const selected = " bg-green-500 text-white hover:text-white"
   let perNightSelected ="";
   let wholeVacationSelected = "";
   let labelText = "Festgelegtes Budget: pro Nacht";
@@ -63,6 +69,7 @@ const BudgetFilter = (props: BudgetFilterProps) => {
       onSave={onSaveBudget}
       onOpen={onOpenBudget}
       resetDisabled={false}
+      onReset={onReset}
     >
       <div>
         <div className="flex rounded-full border p-1 justify-between items-center">
