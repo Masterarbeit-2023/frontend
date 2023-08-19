@@ -42,10 +42,18 @@ const SearchPage = () => {
   }
 
   const onSaveFilters = (newFilters: string[]) => {
-    console.log("Save: " + newFilters);
-    console.log(selectedFilter);
     setSelectedFilter(newFilters);
   }
+
+  const addItem = (item: string) => {
+    setSelectedFilter([...selectedFilter, item]);
+  };
+
+  const removeItem = (item: string) => {
+    setSelectedFilter(selectedFilter.filter((s) => s !== item));
+  };
+
+  console.log(selectedFilter);
 
   return (
     <div className="pt-10">
@@ -117,7 +125,7 @@ const SearchPage = () => {
           <div className="flex justify-between">
             <BudgetFilter onSave={onSaveBudget} budgetRange={budgetRange} perNight={perNight}/>
             <RatingFilter onSave={onSaveRating} currentRating={rating}/>
-            <MoreFilter onSave={onSaveFilters} selectedFilter={selectedFilter}/>
+            <MoreFilter onSave={onSaveFilters} selectedFilter={selectedFilter} addItem={addItem} removeItem={removeItem} />
           </div>
         </Container>
       </div>

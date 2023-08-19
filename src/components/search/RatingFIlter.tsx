@@ -24,11 +24,17 @@ const RatingFilter = (props: RatingFilterProps) => {
   const onReset = () => {
     props.onSave(0);
   }
+  
+  let buttonText = "Beliebig";
+
+  if (rating >= 7) {
+    buttonText = "" + rating + "+"
+  }
 
   return (
     <Filter
       label="Bewertung"
-      buttonText="Bewertung"
+      buttonText={buttonText}
       onSave={onSaveBudget}
       onOpen={onOpen}
       resetDisabled={rating==0}

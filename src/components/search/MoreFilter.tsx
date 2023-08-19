@@ -7,6 +7,8 @@ import MoreFilterEntry from "./MoreFilterEntry";
 interface MoreFilterProps {
   onSave: any;
   selectedFilter: string[];
+  addItem: any;
+  removeItem: any;
 }
 
 const MoreFilter = (props: MoreFilterProps) => {
@@ -24,7 +26,11 @@ const MoreFilter = (props: MoreFilterProps) => {
     "Rollstuhlgerecht",
   ]);
 
+  const [selectedFilters, setSelectedFilters] = useState(props.selectedFilter);
+
   const onSave = () => {
+    console.log("SELECt" + selectedFilters)
+    props.onSave(selectedFilters);
   };
   const save = (newFilters: string[]) => {
     props.onSave(newFilters);
@@ -35,23 +41,28 @@ const MoreFilter = (props: MoreFilterProps) => {
   const onReset = () => {};
 
   const onChange = (name: string, value: boolean) => {
-    console.log("Name: " + name);
-    const tmpFilters = props.selectedFilter;
+    const tmpFilters = selectedFilters;
+    console.log("Name: " + name + ", Value: " + value);
     if (!value && tmpFilters.filter((e) => e === name).length > 0) {
-      const index = tmpFilters.indexOf(name, 0);
-      if (index > -1) {
-        tmpFilters.splice(index, 1);
-      }
+      console.log("Delete");
+      setSelectedFilters(selectedFilters.filter((s) => s !== name));
+      props.removeItem(name);
     } else if (value && tmpFilters.filter((e) => e === name).length == 0) {
-      tmpFilters.push(name);
+      console.log("Add");
+      setSelectedFilters([...selectedFilters, name]);
+      props.addItem(name);
     }
-    save(tmpFilters);
   };
+
+  let buttonText = "Mehr Filter";
+  if (props.selectedFilter.length > 0) {
+    buttonText = props.selectedFilter.length + " ausgewählt";
+  }
 
   return (
     <Filter
       label="Mehr Filter"
-      buttonText="Mehr Filter"
+      buttonText={buttonText}
       onSave={onSave}
       onOpen={onOpen}
       resetDisabled={false}

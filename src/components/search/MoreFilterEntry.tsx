@@ -9,9 +9,7 @@ interface MoreFilterEntryProps {
 const MoreFilterEntry = (props: MoreFilterEntryProps) => {
   const onChange = (e: CheckboxChangeEvent) => {
     props.onChange(props.value, e.target.checked)
-    //console.log(`checked = ${e.target.checked}`);
   };
-
   return <Checkbox onChange={onChange}>{props.value}</Checkbox>;
 };
 
