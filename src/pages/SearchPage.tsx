@@ -1,24 +1,15 @@
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Input,
-  Popover,
-} from "antd";
+import { Button, Checkbox, DatePicker, Input, Popover } from "antd";
 import Container from "../components/Container";
-import {  SearchOutlined } from "@ant-design/icons";
+import { BookOutlined, SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import FilterContainer from "../components/search/FilterContainer";
 import BudgetFilter from "../components/search/BudgetFilter";
 import RatingFilter from "../components/search/RatingFilter";
 import MoreFilter from "../components/search/MoreFilter";
+import SortHeader from "../components/search/SortHeader";
+import Hotel from "../models/Hotel";
+import HotelInfoCard from "../components/search/HotelInfoCard";
 
 const { RangePicker } = DatePicker;
-
-interface Filter {
-  name: string;
-  value: boolean;
-}
 
 const SearchPage = () => {
   const [open, setOpen] = useState(false);
@@ -27,23 +18,31 @@ const SearchPage = () => {
   const [perNight, setPerNight] = useState(false);
   const [rating, setRating] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
-
+  const [sorting, setSorting] = useState("experience");
+  const [hotels, setHotels] = useState([
+    new Hotel("Testhotel"),
+    new Hotel("Testhotel2"),
+  ]);
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
+  };
+
+  const handleSortingChange = (newSorting: string) => {
+    setSorting(newSorting);
   };
 
   const onSaveBudget = (newPerNight: boolean, newBudgetRange: number[]) => {
     setPerNight(newPerNight);
     setBudgetRange(newBudgetRange);
-  }
+  };
 
   const onSaveRating = (newRating: number) => {
     setRating(newRating);
-  }
+  };
 
   const onSaveFilters = (newFilters: string[]) => {
     setSelectedFilter(newFilters);
-  }
+  };
 
   const addItem = (item: string) => {
     setSelectedFilter([...selectedFilter, item]);
@@ -52,7 +51,6 @@ const SearchPage = () => {
   const removeItem = (item: string) => {
     setSelectedFilter(selectedFilter.filter((s) => s !== item));
   };
-
 
   return (
     <div className="pt-10">
@@ -122,13 +120,25 @@ const SearchPage = () => {
             </Button>
           </div>
           <div className="flex justify-between">
-            <BudgetFilter onSave={onSaveBudget} budgetRange={budgetRange} perNight={perNight}/>
-            <RatingFilter onSave={onSaveRating} currentRating={rating}/>
-            <MoreFilter onSave={onSaveFilters} selectedFilter={selectedFilter} addItem={addItem} removeItem={removeItem} />
+            <BudgetFilter
+              onSave={onSaveBudget}
+              budgetRange={budgetRange}
+              perNight={perNight}
+            />
+            <RatingFilter onSave={onSaveRating} currentRating={rating} />
+            <MoreFilter
+              onSave={onSaveFilters}
+              selectedFilter={selectedFilter}
+              addItem={addItem}
+              removeItem={removeItem}
+            />
           </div>
         </Container>
       </div>
-      <Container><div></div></Container>
+      <Container>
+        <SortHeader handleSortChange={handleSortingChange} />
+        <HotelInfoCard hotel={hotels[0]}/>
+      </Container>
     </div>
   );
 };
