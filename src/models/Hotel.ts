@@ -7,14 +7,16 @@ class Hotel {
     checkOut: string;
     address: Address;
     rating: Rating;
+    userRatings: Rating[];
 
 
-    constructor(cname: string, ccheckIn: string, ccheckOut: string, caddress: Address, crating: Rating) {
+    constructor(cname: string, ccheckIn: string, ccheckOut: string, caddress: Address, crating: Rating, cuserRatings: Rating[]) {
         this.name = cname;
         this.checkIn = ccheckIn;
         this.checkOut = ccheckOut;
         this.address = caddress;
         this.rating = crating;
+        this.userRatings = cuserRatings;
     }
 }
 

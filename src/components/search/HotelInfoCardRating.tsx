@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Select, Tooltip } from "antd";
 import Hotel from "../../models/Hotel";
 import HotelInfoCardRatingHotel from "./HotelInfoCardRatingHotel";
+import HotelInfoCardRatingUser from "./HotelInfoCardRatingUser";
 
 interface HotelInfoCardRatingProps {
   hotel: Hotel;
@@ -22,9 +23,6 @@ const HotelInfoCardRating = (props: HotelInfoCardRatingProps) => {
     averageRatingText = "Akzeptabel";
   }
 
-  const handleChange = (value: string) => {
-    
-  };
   return (
     <div className="p-3">
       <h1 className="font-bold text-xl mb-6">Bewertung</h1>
@@ -39,6 +37,9 @@ const HotelInfoCardRating = (props: HotelInfoCardRatingProps) => {
         </Tooltip>
       </div>
       <HotelInfoCardRatingHotel rating={props.hotel.rating} />
+      
+      <HotelInfoCardRatingUser ratings={props.hotel.userRatings} />
+      
     </div>
   );
 };
