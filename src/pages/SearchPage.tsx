@@ -93,7 +93,8 @@ const SearchPage = () => {
       120,
       1.9
     ),
-  ].sort((h1, h2) =>  h2.rating.score - h1.rating.score));
+  ]);
+  const [filteredHotels, setFilteredHotels] = useState(hotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score));
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -102,21 +103,23 @@ const SearchPage = () => {
   const handleSortingChange = (newSorting: string) => {
     setSorting(newSorting);
     if (newSorting == "experience") {
-      setHotels(hotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score))
+      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score))
     } else if (newSorting == "distance") {
-      setHotels(hotels.sort((h1, h2) =>  h1.distanceToCentrum - h2.distanceToCentrum))
+      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h1.distanceToCentrum - h2.distanceToCentrum))
     } else if (newSorting == "price") {      
-      setHotels(hotels.sort((h1, h2) =>  h1.lowestPrice - h2.lowestPrice))
+      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h1.lowestPrice - h2.lowestPrice))
     }
   };
 
   const onSaveBudget = (newPerNight: boolean, newBudgetRange: number[]) => {
     setPerNight(newPerNight);
     setBudgetRange(newBudgetRange);
+    handleFilterChange();
   };
 
   const onSaveRating = (newRating: number) => {
     setRating(newRating);
+    handleFilterChange();
   };
 
   const onSaveFilters = (newFilters: string[]) => {
@@ -130,6 +133,13 @@ const SearchPage = () => {
   const removeItem = (item: string) => {
     setSelectedFilter(selectedFilter.filter((s) => s !== item));
   };
+
+  const handleFilterChange = () => {
+    let tmpHotels = hotels.filter(h => h.lowestPrice >= budgetRange[0] && h.lowestPrice <= budgetRange[1])
+    tmpHotels = tmpHotels.filter(h => h.rating.score >= rating);
+
+    setFilteredHotels(tmpHotels);
+  }
 
   return (
     <div className="pt-10">
@@ -216,7 +226,7 @@ const SearchPage = () => {
       </div>
       <Container>
         <SortHeader handleSortChange={handleSortingChange} />
-        <HotelInfoCardContainer hotels={hotels} />
+        <HotelInfoCardContainer hotels={filteredHotels} />
       </Container>
     </div>
   );
