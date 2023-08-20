@@ -9,6 +9,7 @@ class Rating {
   building: number;
   breakfast: number;
   food: number;
+  cleanliness: number;
   description: string;
   name: string;
   dateRating: string;
@@ -24,6 +25,7 @@ class Rating {
     cbuilding: number,
     cbreakfast: number,
     cfood: number,
+    ccleanliness: number,
     cdescription: string,
     cname: string,
     cdateRating: string
@@ -38,6 +40,7 @@ class Rating {
     this.building = cbuilding;
     this.breakfast = cbreakfast;
     this.food = cfood;
+    this.cleanliness = ccleanliness;
     this.description = cdescription;
     this.name = cname;
     this.dateRating = cdateRating

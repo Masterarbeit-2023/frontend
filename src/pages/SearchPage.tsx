@@ -28,14 +28,14 @@ const SearchPage = () => {
       "15:00",
       "12:00",
       new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
-      new Rating(8.1, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, "", "", "")
+      new Rating(8.1, 8, 8.1, 8.2, 8, 8.1, 8.2, 8, 8.1, 8.2, 8.1, "", "", "")
     ),
     new Hotel(
       "Testhotel2",
       "15:00",
       "12:00",
       new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
-      new Rating(7.5, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, "", "", "")
+      new Rating(7.5, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, 2, "", "", "")
     ),
   ]);
   const handleOpenChange = (newOpen: boolean) => {

@@ -5,7 +5,7 @@ import { CheckOutlined } from "@ant-design/icons";
 import { Button, Tabs } from "antd";
 import HotelInfoCardInfo from "./HotelInfoCardInfo";
 import HotelInfoCardImages from "./HotelInfoCardImages";
-import HotelInfoCardImagesRating from "./HotelInfoCardImagesRating";
+import HotelInfoCardRating from "./HotelInfoCardRating";
 
 interface HotelInfoCardProps {
   hotel: Hotel;
@@ -130,7 +130,7 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
                 children = <HotelInfoCardImages hotel={props.hotel} />
               } else if (id == "3") {
                 label = "Bewertung";
-                children = <HotelInfoCardImagesRating hotel={props.hotel} />
+                children = <HotelInfoCardRating hotel={props.hotel} />
               }
 
               return {
