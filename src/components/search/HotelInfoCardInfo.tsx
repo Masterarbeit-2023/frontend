@@ -1,4 +1,5 @@
 import Hotel from "../../models/Hotel";
+import MapComponent from "./MapComponent";
 
 interface HotelInfoCardInfoProps {
   hotel: Hotel;
@@ -11,20 +12,22 @@ const HotelInfoCardInfo = (props: HotelInfoCardInfoProps) => {
         <h1 className="font-bold text-lg">Ausstattungen und Services</h1>
         <div className="grid grid-cols-2">
         {services.map((service, index) => (
-          <p>{service}</p>
+          <p key={index}>{service}</p>
         ))}
       </div>
 
         <h1 className="font-bold text-lg">Standort</h1>
       </div>
-      Map
+      
+      <MapComponent hotel={props.hotel}/>
+      
       <div className="p-6 ">
         <h1 className="font-bold text-xs">Anreise/Abreise</h1>
-        <p>Anreise: 15:00 Uhr</p>
-        <p>Abreise: 12:00 Uhr</p>
+        <p>Anreise: {props.hotel.checkIn} Uhr</p>
+        <p>Abreise: {props.hotel.checkOut} Uhr</p>
         
         <h1 className="font-bold text-xs pt-3">Adresse</h1>
-        <p>Holzhude 2, 21029, Hamburg, Deutschland</p>
+        <p>{props.hotel.address.toString()}</p>
       </div>
     </div>
   );

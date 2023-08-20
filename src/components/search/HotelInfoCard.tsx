@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import maps from "../../maps.png";
 import Hotel from "../../models/Hotel";
 import { CheckOutlined } from "@ant-design/icons";
@@ -9,18 +9,81 @@ import HotelInfoCardImagesRating from "./HotelInfoCardImagesRating";
 
 interface HotelInfoCardProps {
   hotel: Hotel;
+  cityName: string
+}
+
+
+function toRadians(degrees: number): number {
+  return (degrees * Math.PI) / 180;
+}
+
+function getDistance(
+  coord1: [number, number],
+  coord2: [number, number]
+): number {
+  const R = 6371e3; // Earth's radius in meters
+  const lat1Rad = toRadians(coord1[0]);
+  const lat2Rad = toRadians(coord2[0]);
+  const deltaLat = toRadians(coord2[0] - coord1[0]);
+  const deltaLon = toRadians(coord2[1] - coord1[1]);
+
+  const a =
+    Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLon / 2) *
+      Math.sin(deltaLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c; // Distance in meters
 }
 
 const HotelInfoCard = (props: HotelInfoCardProps) => {
   const [open, setOpen] = useState(false);
+  const [distanceToCenter, setDistanceToCenter] = useState(0);
 
   let bottomBorder = "";
   if (open) {
     bottomBorder = " border-b";
   }
+  let averageRatingText = "";
+  const averageRating = props.hotel.rating.score;
+  if (averageRating >= 8.5){
+    averageRatingText = "Hervorragend";
+  } else if (averageRating >= 8.0) {
+    averageRatingText = "Sehr gut";
+  } else if (averageRating >= 7.5) {
+    averageRatingText = "Gut";
+  } else if ( averageRating >= 7.0) {
+    averageRatingText = "Angemessen";
+  } else {
+    averageRatingText = "Akzeptabel";
+  }
+
+  useEffect(() => {
+    if (props.cityName) {
+      fetch(
+        `https://nominatim.openstreetmap.org/search?city=${props.cityName}&format=json`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            fetch(
+              `https://nominatim.openstreetmap.org/search?city=${props.hotel.address.city}&street=${props.hotel.address.street}+${props.hotel.address.houseNumber}&format=json`
+            )
+              .then((response) => response.json())
+              .then((data2) => {
+                if (data2 && data2.length > 0) {
+                  setDistanceToCenter(Math.round(getDistance([data[0].lat, data[0].lon], [data2[0].lat, data2[0].lon]) / 100) / 10)
+                }
+              });
+          }
+        });
+    }
+  }, [props.cityName]);
 
   return (
-    <div className="rounded-md  w-full shadow-lg">
+    <div className="rounded-md w-full shadow-lg mt-6 bg-blue-50">
       <div
         className={
           "w-full h-full flex rounded-lg justify-between" + bottomBorder
@@ -30,9 +93,9 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
           <img className="w-1/3 h-40 rounded-l-lg" src={maps} />
           <div className=" p-2 text-sm">
             <p className="font-bold mb-6">{props.hotel.name}</p>
-            <p className="mb-3">16.0 km bis zum Zentrum</p>
+            <p className="mb-3">{distanceToCenter} km bis zum Zentrum</p>
             <div className="flex">
-              <p className="font-bold">8.1 - Sehr gut </p>
+              <p className="font-bold">{averageRating} - Sehr gut&nbsp;</p>
               <p>(3000) Bewertungen</p>
             </div>
           </div>

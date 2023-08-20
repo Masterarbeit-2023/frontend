@@ -8,6 +8,9 @@ import MoreFilter from "../components/search/MoreFilter";
 import SortHeader from "../components/search/SortHeader";
 import Hotel from "../models/Hotel";
 import HotelInfoCard from "../components/search/HotelInfoCard";
+import Rating from "../models/Rating";
+import HotelInfoCardContainer from "../components/search/HotelInfoCardContainer";
+import Address from "../models/Address";
 
 const { RangePicker } = DatePicker;
 
@@ -20,8 +23,20 @@ const SearchPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
   const [sorting, setSorting] = useState("experience");
   const [hotels, setHotels] = useState([
-    new Hotel("Testhotel"),
-    new Hotel("Testhotel2"),
+    new Hotel(
+      "Testhotel",
+      "15:00",
+      "12:00",
+      new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
+      new Rating(8.1, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, "", "", "")
+    ),
+    new Hotel(
+      "Testhotel2",
+      "15:00",
+      "12:00",
+      new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
+      new Rating(7.5, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, "", "", "")
+    ),
   ]);
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -137,7 +152,7 @@ const SearchPage = () => {
       </div>
       <Container>
         <SortHeader handleSortChange={handleSortingChange} />
-        <HotelInfoCard hotel={hotels[0]}/>
+        <HotelInfoCardContainer hotels={hotels} />
       </Container>
     </div>
   );
