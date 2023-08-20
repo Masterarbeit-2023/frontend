@@ -24,6 +24,33 @@ const SearchPage = () => {
   const [sorting, setSorting] = useState("experience");
   const [hotels, setHotels] = useState([
     new Hotel(
+      "Testhotel2",
+      "15:00",
+      "12:00",
+      new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
+      new Rating(7.5, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, 2, "", "", ""),
+      [
+        new Rating(
+          8.1,
+          8,
+          8.1,
+          8.2,
+          8,
+          8.1,
+          8.2,
+          8,
+          8.1,
+          8.2,
+          8.1,
+          "Das Hotel ist gut! Laesst keine Wuensche offen ausser - ab 11 pm nur Oeffnung ueber Sekurity! Das parkhaus ist leider sehr schlecht ausgeschildert - nach 10pm kann man sich verlaufen - wir haben 30 Minuten gebraucht und Hilfe benoetigt! Ohne Auto ok - mit Auto fier mich nicht mehr!",
+          "Wilhelm",
+          "25.02.2023"
+        ),
+      ],
+      80,
+      15.5
+    ),
+    new Hotel(
       "Testhotel",
       "15:00",
       "12:00",
@@ -62,40 +89,25 @@ const SearchPage = () => {
           "Wilhelm",
           "25.02.2023"
         ),
-      ]
+      ], 
+      120,
+      1.9
     ),
-    new Hotel(
-      "Testhotel2",
-      "15:00",
-      "12:00",
-      new Address("Holzhude", 2, "21029", "Hamburg", "Deutschland"),
-      new Rating(7.5, 7.1, 8, 8, 8, 8, 8, 8, 8, 8, 2, "", "", ""),
-      [
-        new Rating(
-          8.1,
-          8,
-          8.1,
-          8.2,
-          8,
-          8.1,
-          8.2,
-          8,
-          8.1,
-          8.2,
-          8.1,
-          "Das Hotel ist gut! Laesst keine Wuensche offen ausser - ab 11 pm nur Oeffnung ueber Sekurity! Das parkhaus ist leider sehr schlecht ausgeschildert - nach 10pm kann man sich verlaufen - wir haben 30 Minuten gebraucht und Hilfe benoetigt! Ohne Auto ok - mit Auto fier mich nicht mehr!",
-          "Wilhelm",
-          "25.02.2023"
-        ),
-      ]
-    ),
-  ]);
+  ].sort((h1, h2) =>  h2.rating.score - h1.rating.score));
+
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
 
   const handleSortingChange = (newSorting: string) => {
     setSorting(newSorting);
+    if (newSorting == "experience") {
+      setHotels(hotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score))
+    } else if (newSorting == "distance") {
+      setHotels(hotels.sort((h1, h2) =>  h1.distanceToCentrum - h2.distanceToCentrum))
+    } else if (newSorting == "price") {      
+      setHotels(hotels.sort((h1, h2) =>  h1.lowestPrice - h2.lowestPrice))
+    }
   };
 
   const onSaveBudget = (newPerNight: boolean, newBudgetRange: number[]) => {

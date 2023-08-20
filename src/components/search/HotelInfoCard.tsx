@@ -9,9 +9,8 @@ import HotelInfoCardRating from "./HotelInfoCardRating";
 
 interface HotelInfoCardProps {
   hotel: Hotel;
-  cityName: string
+  cityName: string;
 }
-
 
 function toRadians(degrees: number): number {
   return (degrees * Math.PI) / 180;
@@ -48,20 +47,23 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
   }
   let averageRatingText = "";
   const averageRating = props.hotel.rating.score;
-  if (averageRating >= 8.5){
+  if (averageRating >= 8.5) {
     averageRatingText = "Hervorragend";
   } else if (averageRating >= 8.0) {
     averageRatingText = "Sehr gut";
   } else if (averageRating >= 7.5) {
     averageRatingText = "Gut";
-  } else if ( averageRating >= 7.0) {
+  } else if (averageRating >= 7.0) {
     averageRatingText = "Angemessen";
   } else {
     averageRatingText = "Akzeptabel";
   }
 
+  //  Should be calculated when hotels are fetched
+  /*
   useEffect(() => {
     if (props.cityName) {
+      
       fetch(
         `https://nominatim.openstreetmap.org/search?city=${props.cityName}&format=json`
       )
@@ -74,13 +76,21 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
               .then((response) => response.json())
               .then((data2) => {
                 if (data2 && data2.length > 0) {
-                  setDistanceToCenter(Math.round(getDistance([data[0].lat, data[0].lon], [data2[0].lat, data2[0].lon]) / 100) / 10)
+                  setDistanceToCenter(
+                    Math.round(
+                      getDistance(
+                        [data[0].lat, data[0].lon],
+                        [data2[0].lat, data2[0].lon]
+                      ) / 100
+                    ) / 10
+                  );
                 }
               });
           }
         });
     }
   }, [props.cityName]);
+  */
 
   return (
     <div className="rounded-md w-full shadow-lg mt-6 bg-blue-50">
@@ -93,10 +103,10 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
           <img className="w-1/3 h-40 rounded-l-lg" src={maps} />
           <div className=" p-2 text-sm">
             <p className="font-bold mb-6">{props.hotel.name}</p>
-            <p className="mb-3">{distanceToCenter} km bis zum Zentrum</p>
+            <p className="mb-3">{props.hotel.distanceToCentrum} km bis zum Zentrum</p>
             <div className="flex">
               <p className="font-bold">{averageRating} - Sehr gut&nbsp;</p>
-              <p>(3000) Bewertungen</p>
+              <p>({props.hotel.userRatings.length} Bewertungen)</p>
             </div>
           </div>
         </div>
@@ -105,10 +115,20 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
             <CheckOutlined /> Kostenlose Stornierung
           </div>
           <div className="flex h-1/3 justify-between">
-            <Button onClick={(e) => setOpen(!open)}>Infos</Button>
-            <Button className="p-1 flex items-center bg-green-500 text-white bottom-0">
-              Zum Angebot
+            <Button
+              className="bg-blue-500 text-white"
+              onClick={(e) => setOpen(!open)}
+            >
+              Infos
             </Button>
+            <div className="flex items-center">
+              <p className="font-bold text-xl pr-6">
+                {props.hotel.lowestPrice}€
+              </p>
+              <Button className="p-1 flex items-center bg-green-500 text-white bottom-0">
+                Zum Angebot
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -122,15 +142,15 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
               let label = "";
               let children = <div></div>;
 
-              if(id == "1") {
+              if (id == "1") {
                 label = "Info";
-                children = <HotelInfoCardInfo hotel={props.hotel} />
-              } else if(id == "2") {
+                children = <HotelInfoCardInfo hotel={props.hotel} />;
+              } else if (id == "2") {
                 label = "Bilder";
-                children = <HotelInfoCardImages hotel={props.hotel} />
+                children = <HotelInfoCardImages hotel={props.hotel} />;
               } else if (id == "3") {
                 label = "Bewertung";
-                children = <HotelInfoCardRating hotel={props.hotel} />
+                children = <HotelInfoCardRating hotel={props.hotel} />;
               }
 
               return {

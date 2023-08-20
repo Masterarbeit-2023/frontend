@@ -8,15 +8,18 @@ class Hotel {
     address: Address;
     rating: Rating;
     userRatings: Rating[];
+    lowestPrice: number;
+    distanceToCentrum: number;
 
-
-    constructor(cname: string, ccheckIn: string, ccheckOut: string, caddress: Address, crating: Rating, cuserRatings: Rating[]) {
+    constructor(cname: string, ccheckIn: string, ccheckOut: string, caddress: Address, crating: Rating, cuserRatings: Rating[], clowestPrice: number, cdistanceToCentrum:number) {
         this.name = cname;
         this.checkIn = ccheckIn;
         this.checkOut = ccheckOut;
         this.address = caddress;
         this.rating = crating;
         this.userRatings = cuserRatings;
+        this.lowestPrice = clowestPrice;
+        this.distanceToCentrum = cdistanceToCentrum;
     }
 }
 
