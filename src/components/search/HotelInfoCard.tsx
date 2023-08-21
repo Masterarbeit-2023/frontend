@@ -103,7 +103,9 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
           <img className="w-1/3 h-40 rounded-l-lg" src={maps} />
           <div className=" p-2 text-sm">
             <p className="font-bold mb-6">{props.hotel.name}</p>
-            <p className="mb-3">{props.hotel.distanceToCentrum} km bis zum Zentrum</p>
+            <p className="mb-3">
+              {props.hotel.distanceToCentrum} km bis zum Zentrum
+            </p>
             <div className="flex">
               <p className="font-bold">{averageRating} - Sehr gut&nbsp;</p>
               <p>({props.hotel.userRatings.length} Bewertungen)</p>
@@ -111,10 +113,14 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
           </div>
         </div>
         <div className="w-1/2 m-3 text-xs rounded-lg border text-green-600 border-green-500 bg-green-100 p-1">
-          <div className="h-2/3">
-            <CheckOutlined /> Kostenlose Stornierung
+          <div className="h-2/3 grid grid-cols-2">
+            {props.hotel.services.map((service, index) => (
+              <p>
+                <CheckOutlined /> {service}
+              </p>
+            ))}
           </div>
-          <div className="flex h-1/3 justify-between">
+          <div className="flex h-1/3 justify-between items-center">
             <Button
               className="bg-blue-500 text-white"
               onClick={(e) => setOpen(!open)}

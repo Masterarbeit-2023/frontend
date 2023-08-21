@@ -8,7 +8,7 @@ import {
 } from "antd";
 import Container from "../components/Container";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BudgetFilter from "../components/search/BudgetFilter";
 import RatingFilter from "../components/search/RatingFilter";
 import MoreFilter from "../components/search/MoreFilter";
@@ -19,7 +19,7 @@ import HotelInfoCardContainer from "../components/search/HotelInfoCardContainer"
 import Address from "../models/Address";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useParams } from "react-router";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
 
@@ -39,8 +39,10 @@ const SearchPage = () => {
   const [children, setChildren] = useState(0);
   const [numberRooms, setNumberRooms] = useState(1);
   const [petsAllowed, setPetsAllowed] = useState(false);
+  const [paramsLoaded, setParamsLoaded] = useState(false);
   const [hotels, setHotels] = useState([
     new Hotel(
+      1,
       "Testhotel2",
       "15:00",
       "12:00",
@@ -65,9 +67,12 @@ const SearchPage = () => {
         ),
       ],
       80,
-      15.5
+      15.5,
+      [],
+      []
     ),
     new Hotel(
+      2,
       "Testhotel",
       "15:00",
       "12:00",
@@ -108,7 +113,9 @@ const SearchPage = () => {
         ),
       ],
       120,
-      1.9
+      1.9,
+      [],
+      []
     ),
   ]);
   const [filteredHotels, setFilteredHotels] = useState(
@@ -132,7 +139,17 @@ const SearchPage = () => {
     paramChildren = "" + params["children"];
     paramRooms = "" + params["rooms"];
     paramPetsAllowed = "" + params["petsAllowed"];
+    //setParamsLoaded(true);
   }
+  useEffect(() => {
+    fetch(
+      `http://localhost:8080/hotels?location=${paramLocation}&startDate=${paramStartDate}&endDate=${paramEndDate}&adults=${paramAdults}&children=${paramChildren}&rooms=${paramRooms}&petsAllowed=${paramPetsAllowed}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setFilteredHotels(data);
+      });
+  }, [paramPetsAllowed]);
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -249,7 +266,10 @@ const SearchPage = () => {
               defaultValue={paramLocation}
               prefix={<SearchOutlined />}
             />
-            <RangePicker defaultValue={[dayjs(paramStartDate), dayjs(paramEndDate)]} className="mr-3 w-1/3" />
+            <RangePicker
+              defaultValue={[dayjs(paramStartDate), dayjs(paramEndDate)]}
+              className="mr-3 w-1/3"
+            />
             <Popover
               content={
                 <div>

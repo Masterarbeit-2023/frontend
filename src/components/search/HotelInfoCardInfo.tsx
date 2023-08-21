@@ -4,15 +4,15 @@ import MapComponent from "./MapComponent";
 interface HotelInfoCardInfoProps {
   hotel: Hotel;
 }
-const services = ["Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon", "Balkon"];
 const HotelInfoCardInfo = (props: HotelInfoCardInfoProps) => {
+  const address = props.hotel.address;
   return (
     <div>
       <div className="px-6">
         <h1 className="font-bold text-lg">Ausstattungen und Services</h1>
         <div className="grid grid-cols-2">
-        {services.map((service, index) => (
-          <p key={index}>{service}</p>
+        {props.hotel.facilities.map((facility, index) => (
+          <p key={index}>{facility}</p>
         ))}
       </div>
 
@@ -27,7 +27,9 @@ const HotelInfoCardInfo = (props: HotelInfoCardInfoProps) => {
         <p>Abreise: {props.hotel.checkOut} Uhr</p>
         
         <h1 className="font-bold text-xs pt-3">Adresse</h1>
-        <p>{props.hotel.address.toString()}</p>
+        <p>{address.street}&nbsp;{address.houseNumber}</p>
+        <p>{address.postalCode}&nbsp;{address.city}</p>
+        <p>{address.country}</p>
       </div>
     </div>
   );
