@@ -213,7 +213,7 @@ const HomePage = () => {
                 {numberRooms} Zimmer {adults + children} Gäste
               </Button>
             </Popover>
-            <Button type="primary" className="bg-blue-500" href="/search">
+            <Button type="primary" className="bg-blue-500" href={`/search/${location}/${startDate}/${endDate}/${adults}/${children}/${numberRooms}/${petsAllowed}`}>
               Suche
             </Button>
           </div>

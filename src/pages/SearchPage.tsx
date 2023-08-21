@@ -18,6 +18,8 @@ import Rating from "../models/Rating";
 import HotelInfoCardContainer from "../components/search/HotelInfoCardContainer";
 import Address from "../models/Address";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useParams } from "react-router";
+import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 
@@ -37,7 +39,6 @@ const SearchPage = () => {
   const [children, setChildren] = useState(0);
   const [numberRooms, setNumberRooms] = useState(1);
   const [petsAllowed, setPetsAllowed] = useState(false);
-
   const [hotels, setHotels] = useState([
     new Hotel(
       "Testhotel2",
@@ -113,6 +114,25 @@ const SearchPage = () => {
   const [filteredHotels, setFilteredHotels] = useState(
     hotels.sort((h1, h2) => h2.rating.score - h1.rating.score)
   );
+
+  let paramLocation = "";
+  let paramStartDate = "";
+  let paramEndDate = "";
+  let paramAdults = "";
+  let paramChildren = "";
+  let paramRooms = "";
+  let paramPetsAllowed = "";
+
+  const params = useParams();
+  if (params) {
+    paramLocation = "" + params["location"];
+    paramStartDate = "" + params["startDate"];
+    paramEndDate = "" + params["endDate"];
+    paramAdults = "" + params["adults"];
+    paramChildren = "" + params["children"];
+    paramRooms = "" + params["rooms"];
+    paramPetsAllowed = "" + params["petsAllowed"];
+  }
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -226,9 +246,10 @@ const SearchPage = () => {
             <Input
               className="mr-3 w-1/3"
               placeholder="Ort"
+              defaultValue={paramLocation}
               prefix={<SearchOutlined />}
             />
-            <RangePicker className="mr-3 w-1/3" />
+            <RangePicker defaultValue={[dayjs(paramStartDate), dayjs(paramEndDate)]} className="mr-3 w-1/3" />
             <Popover
               content={
                 <div>
@@ -247,7 +268,7 @@ const SearchPage = () => {
                           min={1}
                           max={10}
                           value={adults}
-                          defaultValue={adults}
+                          defaultValue={+paramAdults}
                           onChange={onChangeAdults}
                           className="w-10 h-8 mr-1"
                         />
@@ -273,7 +294,7 @@ const SearchPage = () => {
                           min={0}
                           max={10}
                           value={children}
-                          defaultValue={children}
+                          defaultValue={+paramChildren}
                           onChange={onChangeChildren}
                           className="w-8 h-8 mr-1"
                         />
@@ -299,7 +320,7 @@ const SearchPage = () => {
                           min={0}
                           max={10}
                           value={numberRooms}
-                          defaultValue={numberRooms}
+                          defaultValue={+paramRooms}
                           onChange={onChangeRooms}
                           className="w-8 h-8 mr-1"
                         />
@@ -314,7 +335,7 @@ const SearchPage = () => {
                   </div>
                   <div className="border-t-2 pt-3 mb-3">
                     <Checkbox
-                      defaultChecked={petsAllowed}
+                      defaultChecked={paramPetsAllowed === "true"}
                       onChange={handlePetsAllowedChange}
                     >
                       <h1 className="font-bold">Haustiere erlaubt</h1>
