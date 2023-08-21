@@ -1,16 +1,23 @@
-import { Button, Checkbox, DatePicker, Input, Popover } from "antd";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Input,
+  InputNumber,
+  Popover,
+} from "antd";
 import Container from "../components/Container";
-import { BookOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import BudgetFilter from "../components/search/BudgetFilter";
 import RatingFilter from "../components/search/RatingFilter";
 import MoreFilter from "../components/search/MoreFilter";
 import SortHeader from "../components/search/SortHeader";
 import Hotel from "../models/Hotel";
-import HotelInfoCard from "../components/search/HotelInfoCard";
 import Rating from "../models/Rating";
 import HotelInfoCardContainer from "../components/search/HotelInfoCardContainer";
 import Address from "../models/Address";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 const { RangePicker } = DatePicker;
 
@@ -22,6 +29,15 @@ const SearchPage = () => {
   const [rating, setRating] = useState(0);
   const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
   const [sorting, setSorting] = useState("experience");
+
+  const [location, setLocation] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
+  const [numberRooms, setNumberRooms] = useState(1);
+  const [petsAllowed, setPetsAllowed] = useState(false);
+
   const [hotels, setHotels] = useState([
     new Hotel(
       "Testhotel2",
@@ -89,12 +105,14 @@ const SearchPage = () => {
           "Wilhelm",
           "25.02.2023"
         ),
-      ], 
+      ],
       120,
       1.9
     ),
   ]);
-  const [filteredHotels, setFilteredHotels] = useState(hotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score));
+  const [filteredHotels, setFilteredHotels] = useState(
+    hotels.sort((h1, h2) => h2.rating.score - h1.rating.score)
+  );
 
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -103,11 +121,19 @@ const SearchPage = () => {
   const handleSortingChange = (newSorting: string) => {
     setSorting(newSorting);
     if (newSorting == "experience") {
-      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h2.rating.score - h1.rating.score))
+      setFilteredHotels(
+        filteredHotels.sort((h1, h2) => h2.rating.score - h1.rating.score)
+      );
     } else if (newSorting == "distance") {
-      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h1.distanceToCentrum - h2.distanceToCentrum))
-    } else if (newSorting == "price") {      
-      setFilteredHotels(filteredHotels.sort((h1, h2) =>  h1.lowestPrice - h2.lowestPrice))
+      setFilteredHotels(
+        filteredHotels.sort(
+          (h1, h2) => h1.distanceToCentrum - h2.distanceToCentrum
+        )
+      );
+    } else if (newSorting == "price") {
+      setFilteredHotels(
+        filteredHotels.sort((h1, h2) => h1.lowestPrice - h2.lowestPrice)
+      );
     }
   };
 
@@ -135,11 +161,62 @@ const SearchPage = () => {
   };
 
   const handleFilterChange = () => {
-    let tmpHotels = hotels.filter(h => h.lowestPrice >= budgetRange[0] && h.lowestPrice <= budgetRange[1])
-    tmpHotels = tmpHotels.filter(h => h.rating.score >= rating);
+    let tmpHotels = hotels.filter(
+      (h) => h.lowestPrice >= budgetRange[0] && h.lowestPrice <= budgetRange[1]
+    );
+    tmpHotels = tmpHotels.filter((h) => h.rating.score >= rating);
 
     setFilteredHotels(tmpHotels);
-  }
+  };
+
+  const handlePetsAllowedChange = (e: CheckboxChangeEvent) => {
+    setPetsAllowed(e.target.checked);
+  };
+
+  const handleDecAdults = () => {
+    setAdults(adults - 1);
+  };
+  const handleIncAdults = () => {
+    setAdults(adults + 1);
+  };
+  const onChangeAdults = (value: number | null) => {
+    if (value != null) {
+      setAdults(value);
+    }
+  };
+
+  const handleDecChildren = () => {
+    setChildren(children - 1);
+  };
+  const handleIncChildren = () => {
+    setChildren(children + 1);
+  };
+  const onChangeChildren = (value: number | null) => {
+    if (value != null) {
+      setChildren(value);
+    }
+  };
+
+  const handleDecRooms = () => {
+    setNumberRooms(numberRooms - 1);
+  };
+  const handleIncRooms = () => {
+    setNumberRooms(numberRooms + 1);
+  };
+  const onChangeRooms = (value: number | null) => {
+    if (value != null) {
+      setNumberRooms(value);
+    }
+  };
+
+  const onChangeLocation = (e: any) => {
+    setLocation(e.target.value);
+  };
+
+  const onChangeDate = (value: any, dateString: any) => {
+    setStartDate(dateString[0]);
+    setEndDate(dateString[1]);
+  };
 
   return (
     <div className="pt-10">
@@ -148,7 +225,7 @@ const SearchPage = () => {
           <div className="mt-3 flex items-center pb-6 justify-between">
             <Input
               className="mr-3 w-1/3"
-              placeholder="Hotel"
+              placeholder="Ort"
               prefix={<SearchOutlined />}
             />
             <RangePicker className="mr-3 w-1/3" />
@@ -159,30 +236,87 @@ const SearchPage = () => {
                     <div className="flex">
                       <div className="my-auto w-1/2">Erwachsene</div>
                       <div className="flex mx-auto">
-                        <Button className="rounded-full mr-1">-</Button>
-                        <Input className="w-8 h-8 mr-1" value={1} />
-                        <Button className="rounded-full">+</Button>
+                        <Button
+                          disabled={adults === 1}
+                          onClick={handleDecAdults}
+                          className="rounded-full mr-1"
+                        >
+                          -
+                        </Button>
+                        <InputNumber
+                          min={1}
+                          max={10}
+                          value={adults}
+                          defaultValue={adults}
+                          onChange={onChangeAdults}
+                          className="w-10 h-8 mr-1"
+                        />
+                        <Button
+                          onClick={handleIncAdults}
+                          className="rounded-full"
+                        >
+                          +
+                        </Button>
                       </div>
                     </div>
                     <div className="flex mt-1">
                       <div className="my-auto w-1/2">Kinder</div>
                       <div className="flex mx-auto">
-                        <Button className="rounded-full mr-1">-</Button>
-                        <Input className="w-8 h-8 mr-1" value={1} />
-                        <Button className="rounded-full">+</Button>
+                        <Button
+                          onClick={handleDecChildren}
+                          disabled={children === 0}
+                          className="rounded-full mr-1"
+                        >
+                          -
+                        </Button>
+                        <InputNumber
+                          min={0}
+                          max={10}
+                          value={children}
+                          defaultValue={children}
+                          onChange={onChangeChildren}
+                          className="w-8 h-8 mr-1"
+                        />
+                        <Button
+                          onClick={handleIncChildren}
+                          className="rounded-full"
+                        >
+                          +
+                        </Button>
                       </div>
                     </div>
                     <div className="flex mt-1">
                       <div className="my-auto w-1/2">Zimmer</div>
                       <div className="flex mx-auto">
-                        <Button className="rounded-full mr-1">-</Button>
-                        <Input className="w-8 h-8 mr-1" value={1} />
-                        <Button className="rounded-full">+</Button>
+                        <Button
+                          disabled={numberRooms === 1}
+                          onClick={handleDecRooms}
+                          className="rounded-full mr-1"
+                        >
+                          -
+                        </Button>
+                        <InputNumber
+                          min={0}
+                          max={10}
+                          value={numberRooms}
+                          defaultValue={numberRooms}
+                          onChange={onChangeRooms}
+                          className="w-8 h-8 mr-1"
+                        />
+                        <Button
+                          onClick={handleIncRooms}
+                          className="rounded-full"
+                        >
+                          +
+                        </Button>
                       </div>
                     </div>
                   </div>
                   <div className="border-t-2 pt-3 mb-3">
-                    <Checkbox>
+                    <Checkbox
+                      defaultChecked={petsAllowed}
+                      onChange={handlePetsAllowedChange}
+                    >
                       <h1 className="font-bold">Haustiere erlaubt</h1>
                       <p>Nur haustierfreundliche Unterkünfte</p>
                     </Checkbox>
@@ -201,7 +335,7 @@ const SearchPage = () => {
               onOpenChange={handleOpenChange}
             >
               <Button type="primary" className="bg-blue-500 mr-3 text-xs">
-                1 Zimmer 2 Gäste
+                {numberRooms} Zimmer {adults + children} Gäste
               </Button>
             </Popover>
             <Button type="primary" className="bg-blue-500" href="/search">

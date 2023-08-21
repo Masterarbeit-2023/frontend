@@ -85,7 +85,7 @@ const HomePage = () => {
     setStartDate(dateString[0]);
     setEndDate(dateString[1]);
   };
-  
+
   return (
     <div>
       <div className="relative">
