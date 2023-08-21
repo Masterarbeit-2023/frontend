@@ -94,7 +94,7 @@ const HomePage = () => {
           <div className="bg-white rounded-full shadow-lg flex items-center p-2">
             <Input
               className="mr-3 w-1/3"
-              placeholder="Hotel"
+              placeholder="Ort"
               bordered={false}
               onChange={onChangeLocation}
               prefix={<SearchOutlined />}
