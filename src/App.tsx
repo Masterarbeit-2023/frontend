@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
 import SearchPage from './pages/SearchPage';
+import HotelPage from './pages/HotelPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
               <Route path="/" element={<HomePage/>}/>
               <Route path="/search/:location/:startDate/:endDate/:adults/:children/:rooms/:petsAllowed" element={<SearchPage/>}/>
+              <Route path="/hotel/:id/:startDate/:endDate/:adults/:children/:rooms" element={<HotelPage/>}/>
           </Routes>
         </div>
       </Router>

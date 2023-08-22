@@ -5,6 +5,8 @@ import RestaurantOverview from "../components/home/RestaurantOverview";
 import SpaOverview from "../components/home/SpaOverview";
 import Footer from "../components/home/Footer";
 import Container from "../components/Container";
+import dayjs from "dayjs";
+
 import {
   Button,
   Input,
@@ -16,6 +18,7 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { RangePickerProps } from "antd/es/date-picker";
 
 const { RangePicker } = DatePicker;
 
@@ -86,6 +89,13 @@ const HomePage = () => {
     setEndDate(dateString[1]);
   };
 
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+    // Can not select days before today and today
+    return current && current < dayjs().startOf('day');
+  };
+
+  const disabled = location === "" || startDate === "" || endDate === "";
+
   return (
     <div>
       <div className="relative">
@@ -100,6 +110,7 @@ const HomePage = () => {
               prefix={<SearchOutlined />}
             />
             <RangePicker
+             disabledDate={disabledDate}
               onChange={onChangeDate}
               bordered={false}
               className="mr-3 w-1/3"
@@ -213,7 +224,7 @@ const HomePage = () => {
                 {numberRooms} Zimmer {adults + children} Gäste
               </Button>
             </Popover>
-            <Button type="primary" className="bg-blue-500" href={`/search/${location}/${startDate}/${endDate}/${adults}/${children}/${numberRooms}/${petsAllowed}`}>
+            <Button disabled={disabled} type="primary" className="bg-blue-500" href={`/search/${location}/${startDate}/${endDate}/${adults}/${children}/${numberRooms}/${petsAllowed}`}>
               Suche
             </Button>
           </div>

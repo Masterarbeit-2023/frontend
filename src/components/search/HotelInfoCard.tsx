@@ -10,6 +10,13 @@ import HotelInfoCardRating from "./HotelInfoCardRating";
 interface HotelInfoCardProps {
   hotel: Hotel;
   cityName: string;
+  startDate: string;
+  endDate: string;
+  adults: number;
+  children: number;
+  rooms: number;
+  hotelImage: string;
+  roomImages: string[];
 }
 
 function toRadians(degrees: number): number {
@@ -100,7 +107,7 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
         }
       >
         <div className="flex">
-          <img className="w-1/3 h-40 rounded-l-lg" src={maps} />
+          <img className="w-40 h-40 rounded-l-lg" src={props.hotelImage} />
           <div className=" p-2 text-sm">
             <p className="font-bold mb-6">{props.hotel.name}</p>
             <p className="mb-3">
@@ -115,7 +122,7 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
         <div className="w-1/2 m-3 text-xs rounded-lg border text-green-600 border-green-500 bg-green-100 p-1">
           <div className="h-2/3 grid grid-cols-2">
             {props.hotel.services.map((service, index) => (
-              <p>
+              <p key={index}>
                 <CheckOutlined /> {service}
               </p>
             ))}
@@ -131,7 +138,7 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
               <p className="font-bold text-xl pr-6">
                 {props.hotel.lowestPrice}€
               </p>
-              <Button className="p-1 flex items-center bg-green-500 text-white bottom-0">
+              <Button href={`/hotel/1/${props.startDate}/${props.endDate}/${props.adults}/${props.children}/${props.rooms}`} className="p-1 flex items-center bg-green-500 text-white bottom-0">
                 Zum Angebot
               </Button>
             </div>
@@ -153,7 +160,7 @@ const HotelInfoCard = (props: HotelInfoCardProps) => {
                 children = <HotelInfoCardInfo hotel={props.hotel} />;
               } else if (id == "2") {
                 label = "Bilder";
-                children = <HotelInfoCardImages hotel={props.hotel} />;
+                children = <HotelInfoCardImages hotel={props.hotel} roomImages={props.roomImages} />;
               } else if (id == "3") {
                 label = "Bewertung";
                 children = <HotelInfoCardRating hotel={props.hotel} />;

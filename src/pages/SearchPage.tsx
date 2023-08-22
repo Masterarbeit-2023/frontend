@@ -20,6 +20,7 @@ import Address from "../models/Address";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useParams } from "react-router";
 import dayjs from "dayjs";
+import ResponseData from "../models/ResponseData";
 
 const { RangePicker } = DatePicker;
 
@@ -121,6 +122,42 @@ const SearchPage = () => {
   const [filteredHotels, setFilteredHotels] = useState(
     hotels.sort((h1, h2) => h2.rating.score - h1.rating.score)
   );
+
+  const API_KEY = "IcND4OlRbmTA23qGFJuxyWZXi6vDnOf48k1ArxkTsdLARynK6mZjyhEj";
+  const [hotelImages, setHotelImages] = useState<string[]>([]);
+  const [roomImages, setRoomImages] = useState<string[]>([]);
+
+  const fetchHotelImages = async () => {
+    const url = `https://api.pexels.com/v1/search?query=hotel+building&perPage=20`;
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: API_KEY,
+      },
+    });
+    const data: ResponseData = await response.json();
+   
+    // @ts-ignore
+    setHotelImages(data.photos.map((photo) => photo.src.large));
+  };
+
+  const fetchRoomImages = async () => {
+    const url = `https://api.pexels.com/v1/search?query=hotel+room`;
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: API_KEY,
+      },
+    });
+    const data: ResponseData = await response.json();
+    // @ts-ignore
+    setRoomImages(data.photos.map((photo) => photo.src.large));
+  };
+
+  useEffect(() => {
+    fetchHotelImages();
+    fetchRoomImages();
+  }, [hotels]);
 
   let paramLocation = "";
   let paramStartDate = "";
@@ -379,7 +416,11 @@ const SearchPage = () => {
                 {numberRooms} Zimmer {adults + children} Gäste
               </Button>
             </Popover>
-            <Button type="primary" className="bg-blue-500" href="/search">
+            <Button
+              type="primary"
+              href={`/search/${location}/${startDate}/${endDate}/${adults}/${children}/${numberRooms}/${petsAllowed}`}
+              className="bg-blue-500"
+            >
               Suche
             </Button>
           </div>
@@ -401,7 +442,16 @@ const SearchPage = () => {
       </div>
       <Container>
         <SortHeader handleSortChange={handleSortingChange} />
-        <HotelInfoCardContainer hotels={filteredHotels} />
+        <HotelInfoCardContainer
+          hotels={filteredHotels}
+          startDate={paramStartDate}
+          endDate={paramEndDate}
+          adults={+paramAdults}
+          children={+paramChildren}
+          rooms={+paramRooms}
+          cityName={paramLocation}
+          hotelImages={hotelImages} 
+          roomImages={roomImages}        />
       </Container>
     </div>
   );

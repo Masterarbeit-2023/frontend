@@ -10,9 +10,9 @@ const HotelInfoCardInfo = (props: HotelInfoCardInfoProps) => {
     <div>
       <div className="px-6">
         <h1 className="font-bold text-lg">Ausstattungen und Services</h1>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-3 list-disc">
         {props.hotel.facilities.map((facility, index) => (
-          <p key={index}>{facility}</p>
+          <li key={index}>{facility}</li>
         ))}
       </div>
 
