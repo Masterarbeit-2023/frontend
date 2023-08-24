@@ -1,6 +1,7 @@
-import { CheckOutlined, ExpandOutlined, TeamOutlined } from "@ant-design/icons";
+import {  ExpandOutlined, TeamOutlined } from "@ant-design/icons";
 import Room from "../../models/Room";
 import { Button, Popover } from "antd";
+import RoomRatePopOver from "./RoomRatePopOver";
 
 interface RoomInfoCardProps {
   room: Room;
@@ -9,8 +10,13 @@ interface RoomInfoCardProps {
 
 const RoomInfoCard = (props: RoomInfoCardProps) => {
   const room = props.room;
+
+  const handleSelectRoom = (room: Room) =>{
+    console.log(room);
+  }
+
   return (
-    <Popover content={<div></div>} trigger={"click"} placement="bottom" className="shadow rounded-lg my-6 hover:scale-105 hover:bg-blue-50 transition-all">
+    <Popover content={<RoomRatePopOver room={room} roomImage={props.roomImage} handleSelectRoom={handleSelectRoom} />} trigger={"click"} placement="bottom" className="shadow rounded-lg my-6 hover:scale-105 hover:bg-blue-50 transition-all">
       <div className="w-full">
         <img className="w-full rounded-t-lg" src={props.roomImage} />
       </div>
@@ -26,8 +32,8 @@ const RoomInfoCard = (props: RoomInfoCardProps) => {
         </div>
         <div className="flex border-t-2 mt-3 pt-3 justify-between">
             <div className="w-2/3 flex items-baseline">
-                <p className="text-md">ab &nbsp; </p>
-                <p className="text-2xl">244,62 €</p>
+                <p className="text-md">ab&nbsp;</p>
+                <p className="text-xl">244,62 €</p>
             </div>
             <div className="w-1/3 flex justify-end">
                 <Button>Weiter</Button>

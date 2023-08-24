@@ -34,8 +34,20 @@ const HotelPage = () => {
   return (
     <div className="pt-20">
       <Container>
-        <p className="text-2xl font-bold">{hotel?.name}</p>
-        {rooms != undefined && <RoomContainer rooms={rooms} />}
+        <div className="flex justify-between items-baseline">
+          <p className="text-2xl font-bold">{hotel?.name}</p>
+          <p className="text-3xl ">Diese Zimmer sind verfügbar</p>
+          <p>Sortieren</p>
+        </div>
+        {
+          paramRooms != undefined &&
+          [...Array(+paramRooms)].map((e, i) =>(
+            <div key={i}>
+                <p className="text-center text-3xl mt-12">{i+1}. Zimmer</p>
+                {rooms != undefined && <RoomContainer rooms={rooms} />}
+            </div>
+          ))
+        }
       </Container>
     </div>
   );
