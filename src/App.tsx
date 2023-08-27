@@ -1,5 +1,4 @@
 import React from 'react';
-import { logout, login, setup, create } from "frontend-library";
 import logo from './logo.svg';
 import {CookieConsent} from "react-cookie-consent";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
