@@ -1,5 +1,6 @@
 import {
   Button,
+  Card,
   Checkbox,
   DatePicker,
   Input,
@@ -41,7 +42,9 @@ const SearchPage = () => {
   const [numberRooms, setNumberRooms] = useState(1);
   const [petsAllowed, setPetsAllowed] = useState(false);
   const [paramsLoaded, setParamsLoaded] = useState(false);
-  const [hotels, setHotels] = useState([
+  const [loading, setLoading] = useState(true);
+  const [hotels, setHotels] = useState<Hotel[]>(
+    [
     new Hotel(
       1,
       "Testhotel2",
@@ -118,7 +121,8 @@ const SearchPage = () => {
       [],
       []
     ),
-  ]);
+  ]
+  );
   const [filteredHotels, setFilteredHotels] = useState(
     hotels.sort((h1, h2) => h2.rating.score - h1.rating.score)
   );
@@ -185,6 +189,7 @@ const SearchPage = () => {
       .then((response) => response.json())
       .then((data) => {
         setFilteredHotels(data);
+        setLoading(false);
       });
   }, [paramPetsAllowed]);
 
@@ -442,7 +447,11 @@ const SearchPage = () => {
       </div>
       <Container>
         <SortHeader handleSortChange={handleSortingChange} />
-        <HotelInfoCardContainer
+        {
+          loading && <Card loading={true}/>
+        }
+        {
+          !loading && <HotelInfoCardContainer
           hotels={filteredHotels}
           startDate={paramStartDate}
           endDate={paramEndDate}
@@ -451,7 +460,8 @@ const SearchPage = () => {
           rooms={+paramRooms}
           cityName={paramLocation}
           hotelImages={hotelImages} 
-          roomImages={roomImages}        />
+          roomImages={roomImages} />
+        }        
       </Container>
     </div>
   );
