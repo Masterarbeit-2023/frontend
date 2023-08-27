@@ -19,6 +19,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { RangePickerProps } from "antd/es/date-picker";
+import RatingForm from "../components/home/RatingForm";
 
 const { RangePicker } = DatePicker;
 
@@ -236,6 +237,7 @@ const HomePage = () => {
         <RoomOverview />
         <RestaurantOverview />
         <SpaOverview />
+        <RatingForm />
       </Container>
       <Footer />
     </div>
