@@ -16,7 +16,7 @@ const RoomRate = (props: RoomRateProps) => {
 
   return (
     <div className="w-full rounded-md p-2 mt-3 shadow">
-      <p className="text-xl">Mitgliedspreis</p>
+      <p className="text-xl">{props.rate.name}</p>
       <div className="flex">
         <div className="w-2/3">
           {props.rate.benefits != undefined &&
