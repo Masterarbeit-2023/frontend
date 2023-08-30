@@ -1,0 +1,42 @@
+name: Deploy to On-Premise Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build React App
+      run: npm run build
+
+    - name: Transfer Build Files to Server
+      uses: appleboy/scp-action@master
+      with:
+        host: 192.168.2.109
+        username: niklas
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: build/   # Update this with your build output directory
+        target: /path/to/your/server/www  # Update this with your server's path
+
+    - name: SSH into Server and Restart
+      uses: appleboy/ssh-action@master
+      with:
+        host: 192.168.2.109
+        username: niklas
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: 'sudo service nginx restart'  # Update this with your restart command
