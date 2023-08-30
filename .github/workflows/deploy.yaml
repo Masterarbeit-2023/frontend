@@ -3,7 +3,7 @@ name: Deploy to On-Premise Server
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
