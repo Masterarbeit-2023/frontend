@@ -28,9 +28,9 @@ const RoomRatePopOver = (props: RoomRatePopOverProps) => {
           </p>
           <p className="font-bold mt-3">Ausstattung</p>
           {room.facilities.map((facility, index) => (
-            <div className="flex items-center">
+            <div className="flex items-center" key={index}>
               <CheckOutlined />
-              <p className="pl-3">{facility}</p>
+              <p className="pl-3">{facility.name}</p>
             </div>
           ))}
         </div>
@@ -40,7 +40,7 @@ const RoomRatePopOver = (props: RoomRatePopOverProps) => {
       </div>
       <div className="my-3 border" />
       {room.rates.map((rate, index) => (
-            <RoomRate room={room} handleSelectRoom={handleSelectRoom} rate={rate} />
+            <RoomRate room={room} handleSelectRoom={handleSelectRoom} rate={rate} key={index} />
           ))}
     </div>
   );

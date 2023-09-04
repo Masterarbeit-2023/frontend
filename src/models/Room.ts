@@ -2,13 +2,17 @@ import Rate from "./Rate";
 
 class Room {
     name: string;
-    facilities: string[];
+    facilities: Facility[];
     rates: Rate[];
+    numberOfPersons: number;
+    roomSizeInSqm: number;
 
-    constructor(cname: string, cfacilities: string[], crates: Rate[]) {
+    constructor(cname: string, cfacilities: Facility[], crates: Rate[], cnumberOfPersons: number, croomSizeInSqm: number) {
         this.name = cname;
         this.facilities = cfacilities;
         this.rates = crates;
+        this.numberOfPersons = cnumberOfPersons;
+        this.roomSizeInSqm = croomSizeInSqm;
     }
 }
 

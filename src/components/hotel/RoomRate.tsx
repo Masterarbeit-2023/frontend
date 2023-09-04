@@ -21,7 +21,7 @@ const RoomRate = (props: RoomRateProps) => {
         <div className="w-2/3">
           {props.rate.benefits != undefined &&
             props.rate.benefits.map((benefit, index) => (
-              <div className="flex items-center text-xs">
+              <div className="flex items-center text-xs" key={index}>
                 <CheckOutlined />
                 <p className="pl-3">{benefit}</p>
               </div>
