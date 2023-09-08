@@ -63,54 +63,52 @@ const RoomOverviewContainer = (props: RoomOverviewContainerProps) => {
   }
 
   return (
-    <div>
-      <div>
+      <div className={"mb-16"}>
         <p className="text-center text-3xl mt-12">{props.index + 1}. Zimmer</p>
         {!editRoom && (
-          <div className="flex text-center justify-center p-3">
-            <Button
-              className="flex items-center justify-center"
-              shape="circle"
-              icon={<EditOutlined />}
-              onClick={toggle}
-            />
-            <p>Erwachsene: {adults}&nbsp; </p>
-            <p>Kinder: {children}&nbsp; </p>
-            <p>Haustiere: {petsText}&nbsp; </p>
-          </div>
+            <div className="flex text-center justify-center p-3">
+              <Button
+                  className="flex items-center justify-center"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={toggle}
+              />
+              <p>Erwachsene: {adults}&nbsp; </p>
+              <p>Kinder: {children}&nbsp; </p>
+              <p>Haustiere: {petsText}&nbsp; </p>
+            </div>
         )}
         {editRoom && (
-          <div className="flex text-center items-center justify-center w-2/3 mx-auto p-3">
-            <Button
-              className="flex items-center justify-center mx-2"
-              shape="circle"
-              icon={<SaveOutlined />}
-              onClick={onSave}
-            />
+            <div className="flex text-center items-center justify-center w-2/3 mx-auto p-3">
+              <Button
+                  className="flex items-center justify-center mx-2"
+                  shape="circle"
+                  icon={<SaveOutlined />}
+                  onClick={onSave}
+              />
 
-            <Input
-              className="mx-2"
-              addonBefore="Erwachsene"
-              type="number"
-              value={adults}
-              onChange={handleChangeAdults}
-            />
-            <Input
-              className="mx-2"
-              addonBefore="Kinder"
-              type="number"
-              value={children}
-              onChange={handleChangeChildren}
-            />
-            <Checkbox className="flex items-center mx-2" onChange={onChange} checked={pets}>
-              Haustiere
-            </Checkbox>
-          </div>
+              <Input
+                  className="mx-2"
+                  addonBefore="Erwachsene"
+                  type="number"
+                  value={adults}
+                  onChange={handleChangeAdults}
+              />
+              <Input
+                  className="mx-2"
+                  addonBefore="Kinder"
+                  type="number"
+                  value={children}
+                  onChange={handleChangeChildren}
+              />
+              <Checkbox className="flex items-center mx-2" onChange={onChange} checked={pets}>
+                Haustiere
+              </Checkbox>
+            </div>
         )}
 
         {rooms != undefined && <RoomContainer rooms={rooms} roomNumber={props.index} handleSelectRoom={props.handleSelectRoom}  bookingRooms={props.bookingRooms}/>}
       </div>
-    </div>
   );
 };
 
