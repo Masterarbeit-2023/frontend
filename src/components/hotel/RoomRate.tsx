@@ -4,7 +4,6 @@ import Room from "../../models/Room";
 import Rate from "../../models/Rate";
 
 interface RoomRateProps {
-  room: Room;
   rate: Rate;
   handleSelectRoom: any;
   selected?: boolean;
@@ -12,7 +11,7 @@ interface RoomRateProps {
 
 const RoomRate = (props: RoomRateProps) => {
   const handleSelectRoom = () => {
-    props.handleSelectRoom(props.room);
+    props.handleSelectRoom(props.rate);
   };
 
   let selectedColor = "hover:bg-blue-50";

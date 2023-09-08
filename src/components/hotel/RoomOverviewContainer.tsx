@@ -6,6 +6,7 @@ import Hotel from "../../models/Hotel";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { on } from "events";
+import BookingRoom from "../../models/BookingRoom";
 
 interface RoomOverviewContainerProps {
   index: number;
@@ -17,6 +18,7 @@ interface RoomOverviewContainerProps {
   pets: boolean;
   onUpdateRoom: any;
   handleSelectRoom: any;
+  bookingRooms: BookingRoom[];
 }
 
 const RoomOverviewContainer = (props: RoomOverviewContainerProps) => {
@@ -106,7 +108,7 @@ const RoomOverviewContainer = (props: RoomOverviewContainerProps) => {
           </div>
         )}
 
-        {rooms != undefined && <RoomContainer rooms={rooms} roomNumber={props.index} handleSelectRoom={props.handleSelectRoom} />}
+        {rooms != undefined && <RoomContainer rooms={rooms} roomNumber={props.index} handleSelectRoom={props.handleSelectRoom}  bookingRooms={props.bookingRooms}/>}
       </div>
     </div>
   );

@@ -15,8 +15,8 @@ interface RoomRatePopOverProps {
 const RoomRateModal = (props: RoomRatePopOverProps) => {
   const room = props.room;
 
-  const handleSelectRoom = () => {
-    props.handleSelectRoom(room);
+  const handleSelectRoom = (rate: Rate) => {
+    props.handleSelectRoom(room, rate);
   };
   return (
     <div className="mb-6">
@@ -42,7 +42,7 @@ const RoomRateModal = (props: RoomRatePopOverProps) => {
       </div>
       <div className="my-3 border" />
       {room.rates.map((rate, index) => (
-            <RoomRate room={room} handleSelectRoom={handleSelectRoom} rate={rate} key={index} selected={rate === props.selectedRate}/>
+            <RoomRate handleSelectRoom={handleSelectRoom} rate={rate} key={index} selected={rate === props.selectedRate}/>
           ))}
     </div>
   );

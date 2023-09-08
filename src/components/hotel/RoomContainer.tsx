@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import ResponseData from "../../models/ResponseData";
 import Room from "../../models/Room";
 import RoomInfoCard from "./RoomInfoCard";
+import BookingRoom from "../../models/BookingRoom";
 
 interface RoomContainerProps {
   rooms: Room[];
   roomNumber: number;
   handleSelectRoom: any;
+  bookingRooms: BookingRoom[];
 }
 
 const RoomContainer = (props: RoomContainerProps) => {
@@ -34,7 +36,7 @@ const RoomContainer = (props: RoomContainerProps) => {
   return (
     <div className=" grid gap-6 grid-cols-3">
       {props.rooms.length >0 && props.rooms.map((room, index) => (
-        <RoomInfoCard key={index} room={room} roomImage={roomImages[index + 2]} roomNumber={props.roomNumber} handleSelectRoom={props.handleSelectRoom} />
+        <RoomInfoCard key={index} room={room} roomImage={roomImages[index + 2]} roomNumber={props.roomNumber} handleSelectRoom={props.handleSelectRoom}  bookingRooms={props.bookingRooms}/>
       ))}
     </div>
   );

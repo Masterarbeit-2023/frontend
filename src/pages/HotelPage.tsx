@@ -4,6 +4,8 @@ import Hotel from "../models/Hotel";
 import Container from "../components/Container";
 import Room from "../models/Room";
 import RoomOverviewContainer from "../components/hotel/RoomOverviewContainer";
+import BookingRoom from "../models/BookingRoom";
+import Rate from "../models/Rate";
 
 const HotelPage = () => {
   const paramStartDate = useParams()["startDate"];
@@ -27,6 +29,9 @@ const HotelPage = () => {
   const [roomChildren, setRoomChildren] = useState<number[]>([]);
   const [roomPets, setRoomPets] = useState<boolean[]>([]);
 
+  const [bookingRooms, setBookingRooms] = useState<BookingRoom[]>(new Array(paramRoomsNumber).fill(new BookingRoom()));
+
+  console.log("Booking rooms: " + JSON.stringify(bookingRooms));
   const onUpdateRoom = (
     index: number,
     adults: number,
@@ -72,15 +77,16 @@ const HotelPage = () => {
     }
   }, [id]);
 
-  const handleRoomSelection = (newIndex: number, newRoom: Room) => {
-    const nextRooms = rooms.map((room, index) => {
+  const handleRoomSelection = (newIndex: number, newRoom: Room, newRate: Rate) => {
+    const nextRooms = bookingRooms.map((bookingRoom, index) => {
       if (index === newIndex) {
-        return newRoom;
+        return new BookingRoom(-1, newRoom, newRate);
       } else {
-        return room;
+        return bookingRoom;
       }
     });
-    setRooms(nextRooms);
+    console.log("Select")
+    setBookingRooms(nextRooms);
   };
 
   useEffect(() => {
@@ -116,7 +122,6 @@ const HotelPage = () => {
       //setRoomPets(tmpPetsArr);
     }
   }, [paramRooms]);
-  console.log(rooms);
 
   return (
     <div className="pt-20">
@@ -142,7 +147,7 @@ const HotelPage = () => {
               startDate={paramStartDate}
               endDate={paramEndDate}
               handleSelectRoom={handleRoomSelection}
-            />
+             bookingRooms={bookingRooms}/>
           ))}
       </Container>
     </div>
