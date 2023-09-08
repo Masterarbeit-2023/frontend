@@ -7,6 +7,7 @@ interface RoomRateProps {
   room: Room;
   rate: Rate;
   handleSelectRoom: any;
+  selected?: boolean;
 }
 
 const RoomRate = (props: RoomRateProps) => {
@@ -14,8 +15,13 @@ const RoomRate = (props: RoomRateProps) => {
     props.handleSelectRoom(props.room);
   };
 
+  let selectedColor = "hover:bg-blue-50";
+  if (props.selected) {
+    selectedColor = "bg-green-50";
+  }
+
   return (
-    <div className="w-full rounded-md p-2 mt-3 shadow">
+    <div className={"w-full rounded-md p-2 mt-3 shadow transition-all " + selectedColor}>
       <p className="text-xl">{props.rate.name}</p>
       <div className="flex">
         <div className="w-2/3">

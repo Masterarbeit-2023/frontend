@@ -3,14 +3,16 @@ import Room from "../../models/Room";
 import { Button } from "antd";
 import { useState } from "react";
 import RoomRate from "./RoomRate";
+import Rate from "../../models/Rate";
 
 interface RoomRatePopOverProps {
   room: Room;
   roomImage: string;
   handleSelectRoom: any;
+  selectedRate?: Rate;
 }
 
-const RoomRatePopOver = (props: RoomRatePopOverProps) => {
+const RoomRateModal = (props: RoomRatePopOverProps) => {
   const room = props.room;
 
   const handleSelectRoom = () => {
@@ -40,10 +42,10 @@ const RoomRatePopOver = (props: RoomRatePopOverProps) => {
       </div>
       <div className="my-3 border" />
       {room.rates.map((rate, index) => (
-            <RoomRate room={room} handleSelectRoom={handleSelectRoom} rate={rate} key={index} />
+            <RoomRate room={room} handleSelectRoom={handleSelectRoom} rate={rate} key={index} selected={rate === props.selectedRate}/>
           ))}
     </div>
   );
 };
 
-export default RoomRatePopOver;
+export default RoomRateModal;
