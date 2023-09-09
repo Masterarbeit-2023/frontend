@@ -42,7 +42,8 @@ const RoomRateModal = (props: RoomRatePopOverProps) => {
       </div>
       <div className="my-3 border" />
       {room.rates.map((rate, index) => (
-            <RoomRate handleSelectRoom={handleSelectRoom} rate={rate} key={index} selected={rate === props.selectedRate}/>
+          // @ts-ignore
+            <RoomRate handleSelectRoom={handleSelectRoom} rate={rate} key={index} selected={rate.id === props.selectedRate.id}/>
           ))}
     </div>
   );

@@ -6,18 +6,17 @@ import HomePage from './pages/HomePage';
 import Header from './components/Header';
 import SearchPage from './pages/SearchPage';
 import HotelPage from './pages/HotelPage';
+import BookingPage from "./pages/BookingPage";
 
 function App() {
   return (
     <div >
       <Router>
-        
-      <Header />
         <div>
           <Routes>
               <Route path="/" element={<HomePage/>}/>
               <Route path="/search/:location/:startDate/:endDate/:adults/:children/:rooms/:petsAllowed" element={<SearchPage/>}/>
-              <Route path="/hotel/:id/:startDate/:endDate/:adults/:children/:rooms" element={<HotelPage/>}/>
+              <Route path="/hotel/:id/:startDate/:endDate/:adults/:children/:rooms" element={<BookingPage/>}/>
           </Routes>
         </div>
       </Router>

@@ -7,7 +7,7 @@ const Container = (props: ContainerProps) => {
 
 
     return (
-        <div className="px-32">
+        <div className="px-32 py-8">
             {props.children}
         </div>
     );

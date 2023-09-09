@@ -6,8 +6,14 @@ import Room from "../models/Room";
 import RoomOverviewContainer from "../components/hotel/RoomOverviewContainer";
 import BookingRoom from "../models/BookingRoom";
 import Rate from "../models/Rate";
+import {Button} from "antd";
 
-const HotelPage = () => {
+interface HotelPageProps{
+  handleRoomSelection: any;
+  bookingRooms: BookingRoom[];
+}
+
+const HotelPage = (props: HotelPageProps) => {
   const paramStartDate = useParams()["startDate"];
   const paramEndDate = useParams()["endDate"];
   const paramAdults = useParams()["adults"];
@@ -29,9 +35,8 @@ const HotelPage = () => {
   const [roomChildren, setRoomChildren] = useState<number[]>([]);
   const [roomPets, setRoomPets] = useState<boolean[]>([]);
 
-  const [bookingRooms, setBookingRooms] = useState<BookingRoom[]>(new Array(paramRoomsNumber).fill(new BookingRoom()));
+  //const [bookingRooms, setBookingRooms] = useState<BookingRoom[]>(new Array(paramRoomsNumber).fill(new BookingRoom()));
 
-  console.log("Booking rooms: " + JSON.stringify(bookingRooms));
   const onUpdateRoom = (
     index: number,
     adults: number,
@@ -67,6 +72,17 @@ const HotelPage = () => {
     console.log("Update");
   };
 
+  const buttonDisabled = () => {
+    let disable = false;
+    props.bookingRooms.forEach((room) => {
+      if(room.room.numberOfPersons === 0){
+        disable= true;
+        return
+      }
+    })
+    return disable;
+  }
+
   useEffect(() => {
     if (hotel == undefined) {
       fetch(`http://localhost:8080/hotels/entity?id=${id}`)
@@ -78,15 +94,7 @@ const HotelPage = () => {
   }, [id]);
 
   const handleRoomSelection = (newIndex: number, newRoom: Room, newRate: Rate) => {
-    const nextRooms = bookingRooms.map((bookingRoom, index) => {
-      if (index === newIndex) {
-        return new BookingRoom(-1, newRoom, newRate);
-      } else {
-        return bookingRoom;
-      }
-    });
-    console.log("Select")
-    setBookingRooms(nextRooms);
+    props.handleRoomSelection(newIndex, newRoom, newRate);
   };
 
   useEffect(() => {
@@ -124,7 +132,7 @@ const HotelPage = () => {
   }, [paramRooms]);
 
   return (
-    <div className="pt-20">
+    <div className="pt-8">
       <Container>
         <div className="flex justify-between items-baseline">
           <p className="text-2xl font-bold">{hotel?.name}</p>
@@ -147,7 +155,7 @@ const HotelPage = () => {
               startDate={paramStartDate}
               endDate={paramEndDate}
               handleSelectRoom={handleRoomSelection}
-             bookingRooms={bookingRooms}/>
+             bookingRooms={props.bookingRooms}/>
           ))}
       </Container>
     </div>

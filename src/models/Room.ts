@@ -1,4 +1,5 @@
 import Rate from "./Rate";
+import Facility from "./Facility";
 
 class Room {
     name: string;

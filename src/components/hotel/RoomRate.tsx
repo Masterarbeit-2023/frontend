@@ -34,7 +34,7 @@ const RoomRate = (props: RoomRateProps) => {
         </div>
         <div className="w-1/3">
           <div className="flex items-center justify-between">
-            <p>239 €</p>
+            <p>{props.rate.price} €</p>
             <Button onClick={handleSelectRoom}>Hinzufügen</Button>
           </div>
           <div className="text-xs">Preis pro Nacht: 160 €</div>

@@ -63,7 +63,7 @@ const RoomOverviewContainer = (props: RoomOverviewContainerProps) => {
   }
 
   return (
-      <div className={"mb-16"}>
+      <div className={""}>
         <p className="text-center text-3xl mt-12">{props.index + 1}. Zimmer</p>
         {!editRoom && (
             <div className="flex text-center justify-center p-3">
