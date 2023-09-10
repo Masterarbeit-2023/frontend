@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, Steps} from "antd";
 import HotelSelection from "../components/booking/hotel/HotelSelection";
 import Container from "../components/Container";
@@ -8,18 +8,37 @@ import Room from "../models/Room";
 import Rate from "../models/Rate";
 import ExtraSelection from "../components/booking/extra/ExtraSelection";
 import Extra from "../models/Extra";
+import BookingOverview from "../components/booking/BookingOverview";
+import BookingOverviewHeader from "../components/booking/BookingOverviewHeader";
 
 const BookingPage = () => {
-
-    const paramRooms = useParams()["rooms"];
+        const paramRooms = useParams()["rooms"];
     let paramRoomsNumber = 0;
     if (paramRooms != undefined) {
         paramRoomsNumber = +paramRooms;
     }
 
+    const paramAdults = useParams()["adults"];
+    const paramChildren = useParams()["children"];
+
     const [current, setCurrent] = useState(0);
     const [bookingRooms, setBookingRooms] = useState<BookingRoom[]>(new Array(paramRoomsNumber).fill(new BookingRoom()));
     const [selectedExtra, setSelectedExtras] = useState<Extra[]>([]);
+    const [numberGuests, setNumberGuests] = useState(0);
+
+    useEffect(() => {
+        let paramGuestsNumber = 0;
+        if (paramAdults != undefined) {
+            paramGuestsNumber += parseInt(paramAdults);
+        }
+
+        if (paramChildren != undefined) {
+            paramGuestsNumber += parseInt(paramChildren);
+        }
+
+        setNumberGuests(paramGuestsNumber)
+
+    }, [paramChildren, paramRoomsNumber]);
 
     const handleRoomSelection = (newIndex: number, newRoom: Room, newRate: Rate) => {
         const nextRooms = bookingRooms.map((bookingRoom, index) => {
@@ -72,8 +91,7 @@ const BookingPage = () => {
 
     return (
         <div className="">
-            <div className={"fixed bg-black w-full h-20 z-20"}>
-            </div>
+            <BookingOverviewHeader  guests={numberGuests} roomsNumber={paramRoomsNumber} selectedRooms={bookingRooms} extras={selectedExtra}/>
             <Container>
 
                 <Steps className={"pt-20"} current={current} items={items}/>
@@ -82,6 +100,9 @@ const BookingPage = () => {
                 }
                 {
                     current === 1 && <ExtraSelection handleExtraSelection={handleExtraSelection}  selectedExtras={selectedExtra}/>
+                }
+                {
+                    current === 2 && <BookingOverview />
                 }
                 <div className={"mt-8 flex justify-between"}>
                     {current > 0 && (
