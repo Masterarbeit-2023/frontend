@@ -1,7 +1,7 @@
 import { CheckOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import Room from "../../models/Room";
-import Rate from "../../models/Rate";
+import Room from "../../../models/Room";
+import Rate from "../../../models/Rate";
 
 interface RoomRateProps {
   rate: Rate;

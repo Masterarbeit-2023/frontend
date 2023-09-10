@@ -1,12 +1,12 @@
 import {useState} from "react";
 import {Button, Steps} from "antd";
-import HotelPage from "./HotelPage";
+import HotelSelection from "../components/booking/hotel/HotelSelection";
 import Container from "../components/Container";
 import BookingRoom from "../models/BookingRoom";
 import {useParams} from "react-router-dom";
 import Room from "../models/Room";
 import Rate from "../models/Rate";
-import ExtraSelection from "../components/extra/ExtraSelection";
+import ExtraSelection from "../components/booking/extra/ExtraSelection";
 import Extra from "../models/Extra";
 
 const BookingPage = () => {
@@ -47,7 +47,7 @@ const BookingPage = () => {
     const steps = [
         {
             title: 'Zimmerwahl',
-            content: <HotelPage bookingRooms={bookingRooms} handleRoomSelection={handleRoomSelection}/>,
+            content: <HotelSelection bookingRooms={bookingRooms} handleRoomSelection={handleRoomSelection}/>,
         },
         {
             title: 'Extrawahl',
@@ -78,7 +78,7 @@ const BookingPage = () => {
 
                 <Steps className={"pt-20"} current={current} items={items}/>
                 {
-                    current === 0 && <HotelPage handleRoomSelection={handleRoomSelection} bookingRooms={bookingRooms}/>
+                    current === 0 && <HotelSelection handleRoomSelection={handleRoomSelection} bookingRooms={bookingRooms}/>
                 }
                 {
                     current === 1 && <ExtraSelection handleExtraSelection={handleExtraSelection}  selectedExtras={selectedExtra}/>

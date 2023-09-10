@@ -1,9 +1,9 @@
 import { CheckOutlined } from "@ant-design/icons";
-import Room from "../../models/Room";
+import Room from "../../../models/Room";
 import { Button } from "antd";
 import { useState } from "react";
 import RoomRate from "./RoomRate";
-import Rate from "../../models/Rate";
+import Rate from "../../../models/Rate";
 
 interface RoomRatePopOverProps {
   room: Room;

@@ -1,12 +1,12 @@
 import { Button, Checkbox, Input } from "antd";
 import RoomContainer from "./RoomContainer";
 import { useEffect, useState } from "react";
-import Room from "../../models/Room";
-import Hotel from "../../models/Hotel";
+import Room from "../../../models/Room";
+import Hotel from "../../../models/Hotel";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { on } from "events";
-import BookingRoom from "../../models/BookingRoom";
+import BookingRoom from "../../../models/BookingRoom";
 
 interface RoomOverviewContainerProps {
   index: number;

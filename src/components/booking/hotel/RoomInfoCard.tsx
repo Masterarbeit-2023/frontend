@@ -1,10 +1,10 @@
 import {ExpandOutlined, TeamOutlined} from "@ant-design/icons";
-import Room from "../../models/Room";
+import Room from "../../../models/Room";
 import {Button, Modal} from "antd";
 import RoomRateModal from "./RoomRateModal";
-import Rate from "../../models/Rate";
+import Rate from "../../../models/Rate";
 import {useState} from "react";
-import BookingRoom from "../../models/BookingRoom";
+import BookingRoom from "../../../models/BookingRoom";
 
 interface RoomInfoCardProps {
     room: Room;

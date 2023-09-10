@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ResponseData from "../../models/ResponseData";
-import Room from "../../models/Room";
+import ResponseData from "../../../models/ResponseData";
+import Room from "../../../models/Room";
 import RoomInfoCard from "./RoomInfoCard";
-import BookingRoom from "../../models/BookingRoom";
+import BookingRoom from "../../../models/BookingRoom";
 
 interface RoomContainerProps {
   rooms: Room[];

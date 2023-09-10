@@ -1,11 +1,11 @@
-import Extra from "../../models/Extra";
-import ResponseData from "../../models/ResponseData";
+import Extra from "../../../models/Extra";
+import ResponseData from "../../../models/ResponseData";
 import {useEffect, useState} from "react";
-import Hund from "../../assets/hund.webp";
-import Sekt from "../../assets/Sekt.webp";
-import Spätabreise from "../../assets/Ausschlafen.jpg";
-import Frühanreise from "../../assets/Frühanreise.jpg";
-import Mineralwasser from "../../assets/Mineralwasser.webp";
+import Hund from "../../../assets/hund.webp";
+import Sekt from "../../../assets/Sekt.webp";
+import Spätabreise from "../../../assets/Ausschlafen.jpg";
+import Frühanreise from "../../../assets/Frühanreise.jpg";
+import Mineralwasser from "../../../assets/Mineralwasser.webp";
 
 interface ExtraViewProps {
     extra: Extra;

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import Extra from "../../models/Extra";
+import Extra from "../../../models/Extra";
 import ExtraView from "./ExtraView";
 
 interface ExtraSelectionProps {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Hotel from "../models/Hotel";
-import Container from "../components/Container";
-import Room from "../models/Room";
-import RoomOverviewContainer from "../components/hotel/RoomOverviewContainer";
-import BookingRoom from "../models/BookingRoom";
-import Rate from "../models/Rate";
+import Hotel from "../../../models/Hotel";
+import Container from "../../Container";
+import Room from "../../../models/Room";
+import RoomOverviewContainer from "./RoomOverviewContainer";
+import BookingRoom from "../../../models/BookingRoom";
+import Rate from "../../../models/Rate";
 import {Button} from "antd";
 
 interface HotelPageProps{
@@ -13,7 +13,7 @@ interface HotelPageProps{
   bookingRooms: BookingRoom[];
 }
 
-const HotelPage = (props: HotelPageProps) => {
+const HotelSelection = (props: HotelPageProps) => {
   const paramStartDate = useParams()["startDate"];
   const paramEndDate = useParams()["endDate"];
   const paramAdults = useParams()["adults"];
@@ -162,4 +162,4 @@ const HotelPage = (props: HotelPageProps) => {
   );
 };
 
-export default HotelPage;
+export default HotelSelection;

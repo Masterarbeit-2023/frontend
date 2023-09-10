@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
 import SearchPage from './pages/SearchPage';
-import HotelPage from './pages/HotelPage';
+import HotelSelection from './components/booking/hotel/HotelSelection';
 import BookingPage from "./pages/BookingPage";
 
 function App() {
