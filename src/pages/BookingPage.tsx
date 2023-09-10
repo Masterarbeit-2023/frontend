@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import Room from "../models/Room";
 import Rate from "../models/Rate";
 import ExtraSelection from "../components/extra/ExtraSelection";
+import Extra from "../models/Extra";
 
 const BookingPage = () => {
 
@@ -18,6 +19,7 @@ const BookingPage = () => {
 
     const [current, setCurrent] = useState(0);
     const [bookingRooms, setBookingRooms] = useState<BookingRoom[]>(new Array(paramRoomsNumber).fill(new BookingRoom()));
+    const [selectedExtra, setSelectedExtras] = useState<Extra[]>([]);
 
     const handleRoomSelection = (newIndex: number, newRoom: Room, newRate: Rate) => {
         const nextRooms = bookingRooms.map((bookingRoom, index) => {
@@ -31,6 +33,17 @@ const BookingPage = () => {
         next();
     };
 
+    const handleExtraSelection = (newExtra: Extra) => {
+        if (selectedExtra.filter((e) => e.id === newExtra.id).length > 0) {
+            const nextExtras = selectedExtra.filter((extra) => extra.id !== newExtra.id);
+            setSelectedExtras(nextExtras);
+        }else {
+            const nextExtras = selectedExtra.concat(newExtra);
+            setSelectedExtras(nextExtras);
+        }
+    }
+
+    //console.log(selectedExtra)
     const steps = [
         {
             title: 'Zimmerwahl',
@@ -68,7 +81,7 @@ const BookingPage = () => {
                     current === 0 && <HotelPage handleRoomSelection={handleRoomSelection} bookingRooms={bookingRooms}/>
                 }
                 {
-                    current === 1 && <ExtraSelection />
+                    current === 1 && <ExtraSelection handleExtraSelection={handleExtraSelection}  selectedExtras={selectedExtra}/>
                 }
                 <div className={"mt-8 flex justify-between"}>
                     {current > 0 && (
