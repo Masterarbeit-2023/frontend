@@ -43,27 +43,27 @@ const BookingOverviewHeader = (props: BookingOverviewHeaderProps) => {
         nightText = "Nacht";
     }
     return (
-        <div className={"fixed bg-black w-full h-20 z-20 flex"}>
-            <div className={"bg-blue-50 w-1/6 flex items-center"}>
+        <div className={"fixed bg-blue-100 w-full h-20 z-20 flex"}>
+            <div className={"w-1/6 flex items-center"}>
                 <p className={"mx-auto"}>The Retreat Hotels</p>
             </div>
-            <div className={"bg-blue-100 w-1/6 p-3 flex items-center"}>
+            <div className={" w-1/6 p-3 flex items-center"}>
                 <h1 className={"text-5xl"}>{props.guests}</h1>
                 <p className={"pl-3"}>{guestText}</p>
             </div>
-            <div className={"bg-blue-200 w-1/6 p-3 flex items-center"}>
+            <div className={"w-1/6 p-3 flex items-center"}>
                 <h1 className={"text-5xl"}>{amountOfNights}</h1>
                 <p className={"pl-3"}>{nightText}</p>
             </div>
-            <div className={"bg-blue-300 w-1/6 p-3 flex items-center"}>
+            <div className={"w-1/6 p-3 flex items-center"}>
                 <h1 className={"text-5xl"}>{props.roomsNumber}</h1>
                 <p className={"pl-3"}>Zimmer</p>
             </div>
-            <div className={"bg-blue-400 w-1/6 p-3 flex items-center"}>
+            <div className={"w-1/6 p-3 flex items-center"}>
                 <h1 className={"text-5xl"}>{props.extras.length}</h1>
                 <p className={"pl-3"}>{extraText}</p>
             </div>
-            <div className={"bg-blue-500 w-1/6 p-3 flex items-center"}>
+            <div className={"w-1/6 p-3 flex items-center"}>
                 <h1 className={"w-1/3 text-xs"}>Gesamtpreis in €</h1>
                 <p className={"pl-6 text-4xl"}>{price}</p>
             </div>
