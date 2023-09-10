@@ -6,6 +6,7 @@ import BookingRoom from "../models/BookingRoom";
 import {useParams} from "react-router-dom";
 import Room from "../models/Room";
 import Rate from "../models/Rate";
+import ExtraSelection from "../components/extra/ExtraSelection";
 
 const BookingPage = () => {
 
@@ -27,6 +28,7 @@ const BookingPage = () => {
             }
         });
         setBookingRooms(nextRooms);
+        next();
     };
 
     const steps = [
@@ -61,14 +63,17 @@ const BookingPage = () => {
             </div>
             <Container>
 
-                <Steps current={current} items={items}/>
+                <Steps className={"pt-20"} current={current} items={items}/>
                 {
                     current === 0 && <HotelPage handleRoomSelection={handleRoomSelection} bookingRooms={bookingRooms}/>
+                }
+                {
+                    current === 1 && <ExtraSelection />
                 }
                 <div className={"mt-8 flex justify-between"}>
                     {current > 0 && (
                         <Button onClick={() => prev()}>
-                            Previous
+                            Zurück
                         </Button>
                     )}
                     {current === 0 && (
@@ -76,12 +81,12 @@ const BookingPage = () => {
                     )}
                     {current < steps.length - 1 && (
                         <Button className={""} onClick={() => next()}>
-                            Next
+                            Weiter
                         </Button>
                     )}
                     {current === steps.length - 1 && (
                         <Button>
-                            Done
+                            Bestellung abschließen
                         </Button>
                     )}
                 </div>
