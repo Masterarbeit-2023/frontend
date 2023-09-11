@@ -7,7 +7,7 @@ class BookingRoom {
     rate: Rate;
     constructor(cid?: number, croom?: Room, crate?: Rate) {
         this.id = cid ?? -1;
-        this.room = croom ?? new Room("", [], [], 0, 0);
+        this.room = croom ?? new Room(-1, "", [], [], 0, 0);
         this.rate = crate ?? new Rate(-1,"", false, [], 0);
     }
 

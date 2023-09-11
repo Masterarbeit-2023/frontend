@@ -45,7 +45,7 @@ const BookingOverviewHeader = (props: BookingOverviewHeaderProps) => {
     return (
         <div className={"fixed bg-blue-100 w-full h-20 z-20 flex"}>
             <div className={"w-1/6 flex items-center"}>
-                <p className={"mx-auto"}>The Retreat Hotels</p>
+                <a className={"mx-auto"} href={"/"}>The Retreat Hotels</a>
             </div>
             <div className={" w-1/6 p-3 flex items-center"}>
                 <h1 className={"text-5xl"}>{props.guests}</h1>
