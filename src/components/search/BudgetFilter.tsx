@@ -85,7 +85,7 @@ const BudgetFilter = (props: BudgetFilterProps) => {
             marks={marks}
             disabled={false}
             tooltip={{ formatter: null }}
-            onChange={onChangeBudgetSlider}
+            //onChange={onChangeBudgetSlider}
             max={500}
           />
         </div>
