@@ -9,7 +9,7 @@ import {
 } from "antd";
 import Container from "../components/Container";
 import { SearchOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BudgetFilter from "../components/search/BudgetFilter";
 import RatingFilter from "../components/search/RatingFilter";
 import MoreFilter from "../components/search/MoreFilter";
@@ -22,6 +22,7 @@ import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useParams } from "react-router";
 import dayjs from "dayjs";
 import ResponseData from "../models/ResponseData";
+import Header from "../components/Header";
 
 const { RangePicker } = DatePicker;
 
@@ -298,7 +299,8 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="pt-10">
+    <div className="">
+      <Header />
       <div className="bg-gray-100 pt-10 h-52">
         <Container>
           <div className="mt-3 flex items-center pb-6 justify-between">
